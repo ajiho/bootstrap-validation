@@ -1,0 +1,15 @@
+{
+  "name": "bootstrap-validation",
+  "version": "0.0.1",
+  "description": "让你的表单验证不再繁琐",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.7.0"
+  }
+}
