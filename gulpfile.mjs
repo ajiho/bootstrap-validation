@@ -19,23 +19,38 @@ import {deleteAsync} from 'del';
 //sass
 const sass = gulpSass(dartSass);
 
+
+//eslint公共配置提取
+const eslintConfig = {
+    configType: 'flat',
+    //配置文件
+    overrideConfigFile: './eslint.config.mjs',
+    //当 ESLint 忽略文件时添加结果警告
+    warnIgnored: true,
+}
+
+//stylelint公共配置提取
+const stylelintConfig = {
+    //直接指定配置文件,避免stylelint去查找配置文件
+    configFile: "./stylelint.config.mjs",
+    //打印错误堆栈跟踪
+    debug: true,
+    //报错后是否直接终止程序,必须设置true:否则报错也会执行下面的任务
+    failAfterError: true,
+    //报错类型和格式处理
+    reporters: [
+        {formatter: 'string', console: true}
+    ]
+}
+
+
 //css处理
 gulp.task('css', gulp.series(
     function () {
         return gulp.src(buildPath.css.src)
             .pipe(gulpStylelint({
-                //直接指定配置文件,避免stylelint去查找配置文件
-                configFile: "./stylelint.config.mjs",
-                //自动尽可能的修复，应该单独弄一个任务进行修复
+                ...stylelintConfig,
                 fix: false,
-                //打印错误堆栈跟踪
-                debug: true,
-                //报错后是否直接终止程序,必须设置true:否则报错也会执行下面的任务
-                failAfterError: true,
-                //报错类型和格式处理
-                reporters: [
-                    {formatter: 'string', console: true}
-                ]
             }))
     },
     async function () {
@@ -74,6 +89,8 @@ gulp.task('css:fix', function () {
     return gulp
         .src([buildPath.css.src])
         .pipe(gulpStylelint({
+            ...stylelintConfig,
+            //自动尽可能的修复
             fix: true,
         }))
         .pipe(gulp.dest(buildPath.css.base));
@@ -85,11 +102,8 @@ gulp.task('js', gulp.series(
     function () {
         return gulp.src(buildPath.js.src)
             .pipe(gulpESLintNew({
-                configType: 'flat',
-                //配置文件
-                overrideConfigFile: './eslint.config.mjs',
-                //当 ESLint 忽略文件时添加结果警告
-                warnIgnored: true,
+               ...eslintConfig,
+                fix:false,
             }))
             .pipe(gulpESLintNew.format())
             //检测到错误后立马退出
@@ -105,7 +119,11 @@ gulp.task('js', gulp.series(
 gulp.task('js:fix', function () {
     return gulp
         .src([buildPath.js.src])
-        .pipe(gulpESLintNew({fix: true}))
+        .pipe(gulpESLintNew({
+            ...eslintConfig,
+            //尽可能的修复
+            fix:true,
+        }))
         .pipe(gulpESLintNew.fix());
 });
 
