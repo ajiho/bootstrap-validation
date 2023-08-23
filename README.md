@@ -1,5 +1,6 @@
 # bootstrap-validation
 
-让你的表单验证不再繁琐
+基于bootstrap5.x的表单验证插件
+
 
 

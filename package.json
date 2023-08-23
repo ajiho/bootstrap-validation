@@ -1,15 +1,52 @@
 {
   "name": "bootstrap-validation",
   "version": "0.0.1",
-  "description": "让你的表单验证不再繁琐",
+  "description": "The most elegant form validation plugin designed based on bootstrap 5",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/ajiho/bootstrap-validation"
+  },
+  "keywords": [
+    "Bootstrap 5"
+  ],
+  "homepage": "https://gitee.com/ajiho/bootstrap-validation",
+  "author": "ajiho",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^5.3.1",
     "jquery": "^3.7.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^8.47.0",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.1",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@ronilaukkarinen/gulp-stylelint": "^14.1.1",
+    "autoprefixer": "^10.4.15",
+    "del": "^7.0.0",
+    "eslint": "^8.47.0",
+    "eslint-plugin-compat": "^4.1.4",
+    "fs-extra": "^11.1.1",
+    "globals": "^13.21.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-eslint-new": "^1.8.3",
+    "gulp-filter": "^8.0.0",
+    "gulp-header": "^2.0.9",
+    "gulp-postcss": "^9.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-shell": "^0.8.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "node-css-mqpacker": "^9.0.0",
+    "postcss": "^8.4.21",
+    "rollup": "^3.28.1",
+    "sass": "^1.64.1",
+    "stylelint": "^15.10.2",
+    "stylelint-config-twbs-bootstrap": "^11.0.1"
   }
 }
