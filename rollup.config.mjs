@@ -10,7 +10,7 @@ import buildPath from "./src/config/buildPath.mjs";
 const outputConfig = {
     banner: getBanner(),
     format: 'umd',
-    name: 'BootstrapValidation',
+    name: buildPath.js.name,
     globals: {
         'jquery': 'jQuery'
     },

@@ -11,6 +11,8 @@ export default {
         src: 'src/js/**/*.js',
         //入口文件
         input: 'src/js/index.js',
+        //全局暴露的变量名
+        name:'BootstrapValidation',
         //输出路径
         dest: `dist/js`,
         //输出路径

@@ -17,6 +17,7 @@ export default [
       globals: {
         ...globals.jquery,
         ...globals.browser,
+        ...globals.es2015,
       }
     },
     plugins: {
