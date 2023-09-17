@@ -10,40 +10,172 @@
 
 
 <div class="container">
-    <form id="defaultForm">
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    <div class="page-header">
+        <h2>注册</h2>
+    </div>
+    <form id="defaultForm" method="post" class="form-horizontal" action="target.php">
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">用户名</label>
+            <div class="col-lg-5">
+                <input  type="text" class="form-control" name="username"/>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">邮箱地址</label>
+            <div class="col-lg-5">
+                <input data-bv-message="data-attr-message:邮箱地址无效哦" type="text" class="form-control"
+                       name="email"/>
+            </div>
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">爱好</label>
+            <div class="col-lg-5">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="hobby[]" id="hobby1" value="option1">
+                        跑步
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="hobby[]" id="hobby2" value="option2">
+                        篮球
+                    </label>
+                </div>
+                <div class="radio disabled">
+                    <label>
+                        <input type="radio" name="hobby[]" id="hobby3" value="option3" disabled>
+                        乒乓球
+                    </label>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">身高</label>
+            <div class="col-lg-5">
+                <div class="input-group">
+                    <span class="input-group-addon">cm</span>
+                    <input type="text" class="form-control" name="height">
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">
+                <button type="submit" class="btn btn-primary" name="signup" value="Sign up">注册</button>
+                <button type="submit" class="btn btn-primary" name="signup2" value="Sign up 2">注册按钮2
+                </button>
+                <button type="button" class="btn btn-info" id="validateBtn">手动验证</button>
+                <button type="button" class="btn btn-info" id="resetBtn">重置</button>
+            </div>
+        </div>
+
+
+        <div id="errors"></div>
     </form>
 </div>
 
-
-<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../dist/js/bootstrapValidation.js"></script>
 
 <script>
+    //初始化
     $(document).ready(function () {
 
+        //插件的初始化
+        // $('#form').bootstrapValidation({
+        //     excluded: [':disabled', ':hidden', ':not(:visible)'],
+        //     feedbackIcons: {
+        //         valid: 'glyphicon glyphicon-ok',
+        //         invalid: 'glyphicon glyphicon-remove',
+        //         validating: 'glyphicon glyphicon-refresh'
+        //     },
+        //     live: 'enabled',
+        //     message: '不是有效的值',
+        // })
 
-        new BootstrapValidation(1,{
-            lit: 'ww'
-        })
+        // $('#form').bootstrapValidation('hello', '222')
 
         $('#defaultForm').bootstrapValidation({
-            lit: 'ww',
+            live: 'enabled', //disabled submitted
+            // message: '无效的值',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username: {
+                    // message: '用户名无效',
+                    validators: {
+                        notEmpty: {
+                            // message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: '用户名长度必须大于6个字符且小于30个字符'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '用户名只能由字母、数字、句点和下划线组成'
+                        },
+                        remote: {
+                            type: 'POST',
+                            url: 'remote.php',
+                            message: '用户名已经被注册'
+                        },
+                        different: {
+                            field: 'password,confirmPassword',
+                            message: '用户名和密码不能相同'
+                        }
+                    }
+                },
+                email: {
+                    container: '#errors',
+                    //触发事件类型
+                    trigger: 'input',
+                    // 这样可以把该验证器禁用掉。
+                    enabled: true,
+                    message: 'email-default-message',
+                    validators: {
+                        notEmpty: {},
+                        emailAddress: {
+                            message: '输入的电子邮件地址无效'
+                        }
+                    }
+                },
+
+                'hobby[]': {//用于测试多选框和单选框
+                    message: 'hobby[]-default-message',
+                    validators: {
+                        notEmpty: {},
+                    }
+                },
+                height: {
+                    // threshold:'10',
+                    // container: 'tooltip',
+                    message: 'height-default-message',
+                    validators: {
+                        notEmpty: {},
+                        // numeric: {
+                        //     message: '只允许使用数字'
+                        // }
+                    }
+                },
+            }
+        }).on('init.form.bv', function (bv, op) {
+            console.log('init.form.bv')
         })
+
+
     })
 </script>
 

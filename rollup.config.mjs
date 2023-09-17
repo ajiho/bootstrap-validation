@@ -1,8 +1,8 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
-import {getBanner} from './src/config/utils.mjs'
-import buildPath from "./src/config/buildPath.mjs";
+import {getBanner} from './config/utils.mjs'
+import buildPath from "./config/buildPath.mjs";
 
 
 

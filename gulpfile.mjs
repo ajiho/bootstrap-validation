@@ -12,8 +12,8 @@ import gulpESLintNew from 'gulp-eslint-new'
 import header from 'gulp-header'
 import filter from 'gulp-filter'
 import shell from 'gulp-shell'
-import buildPath from "./src/config/buildPath.mjs";
-import {getBanner} from "./src/config/utils.mjs";
+import buildPath from "./config/buildPath.mjs";
+import {getBanner} from "./config/utils.mjs";
 import {deleteAsync} from 'del';
 
 //sass
