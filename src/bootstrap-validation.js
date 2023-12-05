@@ -4,14 +4,25 @@ import Utils from "./utils";
 import Rules from "./rules";
 
 
+const NAME = 'bootstrapValidation'
+
+
 class BootstrapValidation {
+
+    // 确定用户更改字段值时激发的事件
+    #changeEvent = 'input'
+    // 当远程/回调验证器返回时，指示表单已准备好提交的标志
+    #submitIfValid = null;
+    // 缓存的字段元素
+    #cacheFields = {};
+
+
     constructor(el, options) {
         this.options = options
         this.$form = $(el)
 
         //无效字段
         this.$invalidFields = $([]);    // 无效字段数组
-
         //提交按钮
         this.$submitButton = null;     // 单击以提交表单的提交按钮
         // 隐藏按钮
@@ -26,24 +37,17 @@ class BootstrapValidation {
         // 验证通过的
         this.STATUS_VALID = 'VALID';
 
-        // 确定用户更改字段值时激发的事件
-        this._changeEvent = 'input';
-
-        // 当远程/回调验证器返回时，指示表单已准备好提交的标志
-        this._submitIfValid = null;
-
-        // 缓存的字段元素
-        this._cacheFields = {};
-
         //调用初始化方法
-        this._init();
+        this.#init();
 
+        let b = 10;
     }
+
 
     /**
      * 初始化表单
      */
-    _init() {
+    #init() {
 
         //that是当前实例,这里取出来是避免下面在各种匿名函数中混淆this指向
 
@@ -106,7 +110,7 @@ class BootstrapValidation {
                 //得到 $submitButton
                 that.$submitButton = $(this);
                 // 用户点击提交按钮后，让提交有效标志设置为真
-                that._submitIfValid = true;
+                that.#submitIfValid = true;
 
 
             })
@@ -119,7 +123,7 @@ class BootstrapValidation {
                 //这里是得到所有的字段名称，分别从name或者data-bv-field读取
                 let field = $field.attr('name') || $field.attr('data-bv-field');
                 //调用方法，从HTML属性分析验证器选项
-                let opts = that._parseOptions2($field);
+                let opts = that.#parseOptions2($field);
 
                 if (opts) {
                     //给每个表单字段元素设置data-bv-field="xxxx"
@@ -172,7 +176,7 @@ class BootstrapValidation {
         //循环初始化每个字段
         for (const field in this.options.fields) {
             //初始化字段
-            this._initField(field);
+            this.#initField(field);
         }
 
         //触发表单初始化完成事件
@@ -202,7 +206,7 @@ class BootstrapValidation {
      * @param {jQuery} $field 字段元素
      * @returns {Object}
      */
-    _parseOptions2($field) {
+    #parseOptions2($field) {
         const field = $field.attr('name') || $field.attr('data-bv-field');
         let validators = {};
         let validator;
@@ -268,7 +272,7 @@ class BootstrapValidation {
      *
      * @param {String|jQuery} field 字段名称或字段元素
      */
-    _initField(field) {
+    #initField(field) {
         //创建一个空的 jQuery 集合，用于存储和管理元素
         let fields = $([]);
 
@@ -329,8 +333,8 @@ class BootstrapValidation {
         let updateAll = (total === 1) || ('radio' === type) || ('checkbox' === type);//这里目前是永远都等于true
 
 
-        // 事件类型判断，如果是字段元素是 radio checkbox file SELECT 则用change事件，否则就调用 this._changeEvent
-        let event = ('radio' === type || 'checkbox' === type || 'file' === type || 'SELECT' === fields.eq(0).get(0).tagName) ? 'change' : this._changeEvent;
+        // 事件类型判断，如果是字段元素是 radio checkbox file SELECT 则用change事件，否则就调用 this.#changeEvent
+        let event = ('radio' === type || 'checkbox' === type || 'file' === type || 'SELECT' === fields.eq(0).get(0).tagName) ? 'change' : this.#changeEvent;
         //得到字段上的 trigger字符串数组 ,['input']
         let trigger = (this.options.fields[field].trigger || this.options.trigger || event).split(' ');
         // console.log(trigger)
@@ -356,7 +360,7 @@ class BootstrapValidation {
 
 
             // 得到错误消息容器Jq对象
-            let $message = (container && container !== 'tooltip' && container !== 'popover') ? $(container) : this._getMessageContainer($field, group);
+            let $message = (container && container !== 'tooltip' && container !== 'popover') ? $(container) : this.#getMessageContainer($field, group);
 
             //给它加上一个.has-error 类  来自https://getbootstrap.com/docs/3.4/css/#forms
             if (container && container !== 'tooltip' && container !== 'popover') {
@@ -386,7 +390,7 @@ class BootstrapValidation {
                         .attr('data-bv-validator', validatorName)
                         .attr('data-bv-for', field)
                         .attr('data-bv-result', this.STATUS_NOT_VALIDATED)
-                        .html(this._getMessage(field, validatorName))
+                        .html(this.#getMessage(field, validatorName))
                         .appendTo($message);
                 }
 
@@ -538,7 +542,7 @@ class BootstrapValidation {
             default:
                 // console.log(fields)
                 fields.off(events).on(events, function () {
-                    if (that._exceedThreshold($(this))) { //检测是否超过阈值
+                    if (that.#exceedThreshold($(this))) { //检测是否超过阈值
                         that.validateField($(this));
                     }
                 });
@@ -560,7 +564,7 @@ class BootstrapValidation {
      * @param {String} group
      * @returns {jQuery}
      */
-    _getMessageContainer($field, group) {
+    #getMessageContainer($field, group) {
         let $parent = $field.parent();
         if ($parent.is(group)) {
             return $parent;
@@ -568,7 +572,7 @@ class BootstrapValidation {
 
         let cssClasses = $parent.attr('class');
         if (!cssClasses) {
-            return this._getMessageContainer($parent, group);
+            return this.#getMessageContainer($parent, group);
         }
 
         cssClasses = cssClasses.split(' ');
@@ -579,7 +583,7 @@ class BootstrapValidation {
             }
         }
 
-        return this._getMessageContainer($parent, group);
+        return this.#getMessageContainer($parent, group);
     }
 
 
@@ -590,7 +594,7 @@ class BootstrapValidation {
      * @param {String} validatorName validator名称
      * @returns {String}
      */
-    _getMessage(field, validatorName) {
+    #getMessage(field, validatorName) {
         if (!this.options.fields[field] || !$.fn.bootstrapValidation.validators[validatorName]
             || !this.options.fields[field].validators || !this.options.fields[field].validators[validatorName]) {
             return '';
@@ -617,7 +621,7 @@ class BootstrapValidation {
      * @param {jQuery} $field 字段元素
      * @returns {Boolean}
      */
-    _isExcluded($field) {
+    #isExcluded($field) {
         let excludedAttr = $field.attr('data-bv-excluded'),
             // I still need to check the 'name' attribute while initializing the field
             field = $field.attr('data-bv-field') || $field.attr('name');
@@ -661,7 +665,7 @@ class BootstrapValidation {
      * @param {jQuery} $field 字段元素
      * @param {String} [validatorName] 验证其名称
      */
-    _onFieldValidated($field, validatorName) {
+    #onFieldValidated($field, validatorName) {
         let field = $field.attr('data-bv-field'),
             validators = this.options.fields[field].validators,
             counter = {},
@@ -712,7 +716,7 @@ class BootstrapValidation {
             $field.trigger($.Event(this.options.events.fieldSuccess), data);
         }
         // If all validators are completed and there is at least one validator which doesn't pass
-        else if ((counter[this.STATUS_NOT_VALIDATED] === 0 || !this._isOptionEnabled(field, 'verbose')) && counter[this.STATUS_VALIDATING] === 0 && counter[this.STATUS_INVALID] > 0) {
+        else if ((counter[this.STATUS_NOT_VALIDATED] === 0 || !this.#isOptionEnabled(field, 'verbose')) && counter[this.STATUS_VALIDATING] === 0 && counter[this.STATUS_INVALID] > 0) {
             // Add to the list of invalid fields
             this.$invalidFields = this.$invalidFields.add($field);
 
@@ -728,7 +732,7 @@ class BootstrapValidation {
      * @param {String} option The option name, "verbose", "autoFocus", for example
      * @returns {Boolean}
      */
-    _isOptionEnabled(field, option) {
+    #isOptionEnabled(field, option) {
         if (this.options.fields[field] && (this.options.fields[field][option] === 'true' || this.options.fields[field][option] === true)) {
             return true;
         }
@@ -745,7 +749,7 @@ class BootstrapValidation {
      * @param {jQuery} $field 字段元素
      * @returns {Boolean}
      */
-    _exceedThreshold($field) {
+    #exceedThreshold($field) {
         let field = $field.attr('data-bv-field'),
             threshold = this.options.fields[field].threshold || this.options.threshold;
         if (!threshold) {
@@ -763,12 +767,12 @@ class BootstrapValidation {
      * @returns {null|jQuery[]}
      */
     getFieldElements(field) {
-        if (!this._cacheFields[field]) {
-            this._cacheFields[field] = (this.options.fields[field] && this.options.fields[field].selector)
+        if (!this.#cacheFields[field]) {
+            this.#cacheFields[field] = (this.options.fields[field] && this.options.fields[field].selector)
                 ? $(this.options.fields[field].selector)
                 : this.$form.find('[name="' + field + '"]');
         }
-        return this._cacheFields[field];
+        return this.#cacheFields[field];
     }
 
 
@@ -801,7 +805,7 @@ class BootstrapValidation {
         if (status === this.STATUS_NOT_VALIDATED) {//如果传递进来的状态是无验证的。
             // 重置标志
             // 当延迟验证器在键入时返回true时，防止表单进行提交
-            this._submitIfValid = false;
+            this.#submitIfValid = false;
         }
 
         //重新接受当前实例
@@ -821,7 +825,7 @@ class BootstrapValidation {
             let $field = fields.eq(i);
 
 
-            if (this._isExcluded($field)) {//判断是否被排除的字段，如果是排除的字段，直接逃过这次循环。
+            if (this.#isExcluded($field)) {//判断是否被排除的字段，如果是排除的字段，直接逃过这次循环。
                 continue;
             }
 
@@ -961,7 +965,7 @@ class BootstrapValidation {
                 element: $field,
                 status: status
             });
-            this._onFieldValidated($field, validatorName);
+            this.#onFieldValidated($field, validatorName);
         }
 
         return this;
@@ -1045,13 +1049,13 @@ class BootstrapValidation {
             total = ('radio' === type || 'checkbox' === type) ? 1 : fields.length,
             updateAll = ('radio' === type || 'checkbox' === type),
             validators = this.options.fields[field].validators,
-            verbose = this._isOptionEnabled(field, 'verbose'),
+            verbose = this.#isOptionEnabled(field, 'verbose'),
             validatorName,
             validateResult;
 
         for (let i = 0; i < total; i++) {
             let $field = fields.eq(i);
-            if (this._isExcluded($field)) {
+            if (this.#isExcluded($field)) {
                 continue;
             }
 
@@ -1067,7 +1071,7 @@ class BootstrapValidation {
                 // Don't validate field if it is already done
                 let result = $field.data('bv.result.' + validatorName);
                 if (result === this.STATUS_VALID || result === this.STATUS_INVALID) {
-                    this._onFieldValidated($field, validatorName);
+                    this.#onFieldValidated($field, validatorName);
                     continue;
                 } else if (validators[validatorName].enabled === false) {
                     this.updateStatus(updateAll ? field : $field, this.STATUS_VALID, validatorName);
@@ -1091,7 +1095,7 @@ class BootstrapValidation {
 
                         that.updateStatus(updateAll ? $f.attr('data-bv-field') : $f, response.valid ? that.STATUS_VALID : that.STATUS_INVALID, v);
 
-                        if (response.valid && that._submitIfValid === true) {
+                        if (response.valid && that.#submitIfValid === true) {
                             // If a remote validator returns true and the form is ready to submit, then do it
                             that._submit();
                         } else if (!response.valid && !verbose) {
@@ -1141,7 +1145,7 @@ class BootstrapValidation {
         $container.find('[data-bv-field]').each(function () {
             let $field = $(this),
                 field = $field.attr('data-bv-field');
-            if (!that._isExcluded($field) && !map[field]) {
+            if (!that.#isExcluded($field) && !map[field]) {
                 map[field] = $field;
             }
         });
@@ -1199,13 +1203,13 @@ class BootstrapValidation {
         }
         this.disableSubmitButtons(true);
 
-        this._submitIfValid = false;
+        this.#submitIfValid = false;
         for (let field in this.options.fields) {
             this.validateField(field);
         }
 
         this._submit();
-        this._submitIfValid = true;
+        this.#submitIfValid = true;
 
         return this;
     }
@@ -1223,7 +1227,7 @@ class BootstrapValidation {
         // Call default handler
         // Check if whether the submit button is clicked
         if (this.$submitButton) {
-            isValid ? this._onSuccess(e) : this._onError(e);
+            isValid ? this.#onSuccess(e) : this.#onError(e);
         }
     }
 
@@ -1270,7 +1274,7 @@ class BootstrapValidation {
             $field, validatorName, status;
         for (let i = 0; i < total; i++) {
             $field = fields.eq(i);
-            if (this._isExcluded($field)) {
+            if (this.#isExcluded($field)) {
                 continue;
             }
             for (validatorName in this.options.fields[field].validators) {
@@ -1293,7 +1297,7 @@ class BootstrapValidation {
      *
      * @param {jQuery.Event} e jquery的事件对象
      */
-    _onError(e) {
+    #onError(e) {
         if (e.isDefaultPrevented()) {
             return;
         }
@@ -1307,14 +1311,14 @@ class BootstrapValidation {
                     let fields = that.getFieldElements(f);
                     if (fields.length) {
                         let type = $(fields[0]).attr('type'),
-                            event = ('radio' === type || 'checkbox' === type || 'file' === type || 'SELECT' === $(fields[0]).get(0).tagName) ? 'change' : that._changeEvent,
+                            event = ('radio' === type || 'checkbox' === type || 'file' === type || 'SELECT' === $(fields[0]).get(0).tagName) ? 'change' : that.#changeEvent,
                             trigger = that.options.fields[field].trigger || that.options.trigger || event,
                             events = $.map(trigger.split(' '), function (item) {
                                 return item + '.live.bv';
                             }).join(' ');
 
                         fields.off(events).on(events, function () {
-                            if (that._exceedThreshold($(this))) {
+                            if (that.#exceedThreshold($(this))) {
                                 that.validateField($(this));
                             }
                         });
@@ -1326,7 +1330,7 @@ class BootstrapValidation {
         // Determined the first invalid field which will be focused on automatically
         for (let i = 0; i < this.$invalidFields.length; i++) {
             let $field = this.$invalidFields.eq(i),
-                autoFocus = this._isOptionEnabled($field.attr('data-bv-field'), 'autoFocus');
+                autoFocus = this.#isOptionEnabled($field.attr('data-bv-field'), 'autoFocus');
             if (autoFocus) {
                 // Activate the tab containing the field if exists
                 let $tabPane = $field.parents('.tab-pane'), tabId;
@@ -1348,7 +1352,7 @@ class BootstrapValidation {
      *
      * @param {jQuery.Event} e jquery的事件对象
      */
-    _onSuccess(e) {
+    #onSuccess(e) {
         if (e.isDefaultPrevented()) {
             return;
         }
@@ -1387,14 +1391,14 @@ BootstrapValidation.VERSION = Constants.VERSION
 BootstrapValidation.DEFAULTS = Constants.DEFAULTS
 
 
-// 定义插件
-$.fn.bootstrapValidation = function (option) {
+/**
+ * jQuery API
+ * ====================================================
+ */
+$.fn[NAME] = function (option) {
     //获取参数
     let params = arguments;
-
-
     return this.each(function () {
-
 
         let $this = $(this);
         let data = $this.data('bootstrapValidation');
@@ -1414,16 +1418,16 @@ $.fn.bootstrapValidation = function (option) {
             data[option].apply(data, Array.prototype.slice.call(params, 1));
         }
     });
-
 };
+$.fn[NAME].Constructor = BootstrapValidation;
+$.fn[NAME].VERSION = Constants.VERSION
+$.fn[NAME].defaults = BootstrapValidation.DEFAULTS
+$.fn[NAME].validators = Rules;
+$.fn[NAME].i18n = {};
+$.fn[NAME].utils = Utils
 
 
-$.fn.bootstrapValidation.Constructor = BootstrapValidation;
-$.fn.bootstrapValidation.VERSION = Constants.VERSION
-$.fn.bootstrapValidation.defaults = BootstrapValidation.DEFAULTS
-$.fn.bootstrapValidation.validators = Rules;
-$.fn.bootstrapValidation.i18n = {};
-$.fn.bootstrapValidation.utils = Utils
+
 
 
 export default BootstrapValidation;

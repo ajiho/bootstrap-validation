@@ -1,2 +1,5 @@
 .idea
 node_modules
+
+# 忽略stylelint的缓存
+.cache

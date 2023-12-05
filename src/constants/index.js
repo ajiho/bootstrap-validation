@@ -42,6 +42,7 @@ const DEFAULTS = {
         validating: null
     },
 
+
     // 使用验证器规则映射字段名称
     fields: null,
 

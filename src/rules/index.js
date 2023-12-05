@@ -1,4 +1,3 @@
-
 import notEmpty from "./notEmpty";
 import stringLength from "./stringLength";
 

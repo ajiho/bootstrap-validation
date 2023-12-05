@@ -27,4 +27,12 @@
   top: 0;
   z-index: 100;
 }
+
+.aa {
+  display: flex;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
 /*# sourceMappingURL=bootstrap-validation.css.map */
