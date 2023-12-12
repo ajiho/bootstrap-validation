@@ -1,3 +1,4 @@
+import constants from '../constants'
 import Utils from '../utils'
 
 export default {
@@ -10,12 +11,14 @@ export default {
   },
 
   enableByHtml5: function ($field) {
-    let options = {},
-      maxLength = $field.attr('maxlength'),
-      minLength = $field.attr('minlength')
+    let options = {}
+    let maxLength = $field.attr('maxlength')
+    let minLength = $field.attr('minlength')
+
     if (maxLength) {
       options.max = parseInt(maxLength, 10)
     }
+
     if (minLength) {
       options.min = parseInt(minLength, 10)
     }
@@ -24,27 +27,28 @@ export default {
   },
 
   /**
-   * Check if the length of element value is less or more than given number
+   * 检查元素值的长度是否小于或大于给定的数字
    *
-   * @param {BootstrapValidator} validator The validator plugin instance
-   * @param {jQuery} $field Field element
-   * @param {Object} options Consists of following keys:
+   * @param {bootstrapValidation} validation 验证器插件实例
+   * @param {jQuery} $field 字段元素
+   * @param {Object} options 由以下键组成:
    * - min
    * - max
-   * At least one of two keys is required
-   * The min, max keys define the number which the field value compares to. min, max can be
-   *      - A number
-   *      - Name of field which its value defines the number
-   *      - Name of callback function that returns the number
-   *      - A callback function that returns the number
+   *      - 数字
+   *      - 字段的名称，其值定义数字
+   *      - 返回数字的回调函数的名称
+   *      - 返回数字的回调函数
    *
-   * - message: The invalid message
-   * - trim: Indicate the length will be calculated after trimming the value or not. It is false, by default
-   * - utf8bytes: Evaluate string length in UTF-8 bytes, default to false
+   * - message: 无效消息
+   * - trim: 指示是否在修剪值后计算长度。默认情况下为false
+   * - utf8bytes: 以UTF-8字节计算字符串长度，默认为false
    * @returns {Object}
    */
-  validate: function (validator, $field, options) {
+  rule: function (validation, $field, options) {
     let value = $field.val()
+
+    // console.log(validation, $field, options);
+
     if (options.trim === true || options.trim === 'true') {
       value = $.trim(value)
     }
@@ -54,31 +58,17 @@ export default {
     }
 
     let min = $.isNumeric(options.min)
-        ? options.min
-        : validator.getDynamicOption($field, options.min),
-      max = $.isNumeric(options.max)
-        ? options.max
-        : validator.getDynamicOption($field, options.max),
-      // Credit to http://stackoverflow.com/a/23329386 (@lovasoa) for UTF-8 byte length code
-      utf8Length = function (str) {
-        let s = str.length
-        for (let i = str.length - 1; i >= 0; i--) {
-          let code = str.charCodeAt(i)
-          if (code > 0x7f && code <= 0x7ff) {
-            s++
-          } else if (code > 0x7ff && code <= 0xffff) {
-            s += 2
-          }
-          if (code >= 0xdc00 && code <= 0xdfff) {
-            i--
-          }
-        }
-        return s
-      },
-      length = options.utf8Bytes ? utf8Length(value) : value.length,
-      isValid = true,
-      message =
-        options.message || $.fn.bootstrapValidation.i18n.stringLength['default']
+      ? options.min
+      : validation.getDynamicOption($field, options.min)
+
+    let max = $.isNumeric(options.max)
+      ? options.max
+      : validation.getDynamicOption($field, options.max)
+
+    let isValid = true
+    let length = options.utf8Bytes ? Utils.utf8Length(value) : value.length
+    let message =
+      options.message || $.fn[constants.NAME].i18n.stringLength['default']
 
     if (
       (min && length < parseInt(min, 10)) ||
@@ -90,21 +80,21 @@ export default {
     switch (true) {
       case !!min && !!max:
         message = Utils.format(
-          options.message || $.fn.bootstrapValidation.i18n.stringLength.between,
+          options.message || $.fn[constants.NAME].i18n.stringLength.between,
           [parseInt(min, 10), parseInt(max, 10)],
         )
         break
 
       case !!min:
         message = Utils.format(
-          options.message || $.fn.bootstrapValidation.i18n.stringLength.more,
+          options.message || $.fn[constants.NAME].i18n.stringLength.more,
           parseInt(min, 10),
         )
         break
 
       case !!max:
         message = Utils.format(
-          options.message || $.fn.bootstrapValidation.i18n.stringLength.less,
+          options.message || $.fn[constants.NAME].i18n.stringLength.less,
           parseInt(max, 10),
         )
         break

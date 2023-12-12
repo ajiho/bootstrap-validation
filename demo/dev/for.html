@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试for</title>
+</head>
+
+<body>
+    <script>
+        let obj = {
+            name: 'q',
+            age: 10,
+            sex: "man"
+        }
+
+        let total = 6;
+        for (let i = 0; i < total; i++) {
+            for (const key in obj) {
+                if (i === total - 1) {//判断外层循环是否是最后一次，减少不必要的循环
+                    console.log(key, i);
+                }
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

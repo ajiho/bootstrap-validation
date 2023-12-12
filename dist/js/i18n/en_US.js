@@ -11,13 +11,13 @@
 
   $.fn.bootstrapValidation.i18n = $.extend(true, $.fn.bootstrapValidation.i18n, {
     require: {
-      default: '请填写必填项目'
+      default: 'Please enter a value'
     },
     stringLength: {
-      default: '请输入符合长度限制的值',
-      less: '最多只能输入 %s 个字符',
-      more: '需要输入至少 %s 个字符',
-      between: '请输入 %s 至 %s 个字符'
+      default: 'Please enter a value with valid length',
+      less: 'Please enter less than %s characters',
+      more: 'Please enter more than %s characters',
+      between: 'Please enter value between %s and %s characters long'
     }
   });
 

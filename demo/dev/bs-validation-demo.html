@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="page-header">
+                    <h2>注册</h2>
+                </div>
+                <form action="">
+                    <div class="form-group has-success">
+                        <label class="control-label" for="inputSuccess1">成功的input</label>
+                        <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+                        <span id="helpBlock2" class="help-block">一个帮助文本块，它打断到新行上，并可能延伸到一行之外。</span>
+                    </div>
+                    <div class="form-group has-warning">
+                        <label class="control-label" for="inputWarning1">带警告的输入</label>
+                        <input type="text" class="form-control" id="inputWarning1">
+                    </div>
+                    <div class="form-group has-error">
+                        <label class="control-label" for="inputError1">带错误的输入</label>
+                        <input type="text" class="form-control" id="inputError1">
+                    </div>
+                    <div class="has-success">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="checkboxSuccess" value="option1">
+                                成功复选框
+                            </label>
+                        </div>
+                    </div>
+                    <div class="has-warning">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="checkboxWarning" value="option1">
+                                警告复选框
+                            </label>
+                        </div>
+                    </div>
+                    <div class="has-error">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="checkboxError" value="option1">
+                                错误复选框
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="page-header">
+                    <h2>带图标</h2>
+                </div>
+                <form action="">
+                    <div class="form-group has-success has-feedback">
+                        <label class="control-label" for="inputSuccess2">成功的input</label>
+                        <input type="text" class="form-control" id="inputSuccess2"
+                            aria-describedby="inputSuccess2Status">
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                    </div>
+                    <div class="form-group has-warning has-feedback">
+                        <label class="control-label" for="inputWarning2">静态状态的input</label>
+                        <input type="text" class="form-control" id="inputWarning2"
+                            aria-describedby="inputWarning2Status">
+                        <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputWarning2Status" class="sr-only">(warning)</span>
+                    </div>
+                    <div class="form-group has-error has-feedback">
+                        <label class="control-label" for="inputError2">错误状态的input</label>
+                        <input type="text" class="form-control" id="inputError2" aria-describedby="inputError2Status">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputError2Status" class="sr-only">(error)</span>
+                    </div>
+                    <div class="form-group has-success has-feedback">
+                        <label class="control-label" for="inputGroupSuccess1">带成功状态的input-group</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control" id="inputGroupSuccess1"
+                                aria-describedby="inputGroupSuccess1Status">
+                        </div>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputGroupSuccess1Status" class="sr-only">(success)</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

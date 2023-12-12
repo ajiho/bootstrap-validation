@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Jquery的events测试</h2>
+        </div>
+        <button id="on" class="btn btn-success">注册事件</button>
+        <button id="off" class="btn btn-danger">取消事件</button>
+        <form id="form" method="post" class="form-horizontal" action="target.php">
+
+            <div class="form-group">
+                <label class="col-lg-3 control-label">用户名</label>
+                <div class="col-lg-5">
+                    <input type="text" class="form-control" name="username" data-bv-notempty data-bv-stringlength="true"
+                        data-bv-stringlength-min="2" data-bv-stringlength-max="10" />
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../dist/js/bootstrap-validation.js"></script>
+    <script src="../dist/js/i18n/zh_CN.js"></script>
+
+
+
+    <script>
+        //注册事件
+        $('#on').on('click', function () {
+            $('input[name="username"]').on('focus.update.bv blur.update.bv', function () {
+                console.log('called');
+            })
+        })
+
+
+        
+        //移除事件
+        $('#off').on('click', function () {
+            $('input[name="username"]').off('focus.update.bv blur.update.bv')
+        })
+
+
+
+
+    </script>
+
+</body>
+
+</html>

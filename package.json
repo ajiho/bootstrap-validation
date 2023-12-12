@@ -21,7 +21,7 @@
     "js": "run-s \"js:!(fix)\"",
     "watch:css": "nodemon --watch src/**/*.scss --ext scss --exec \"run-s css\"",
     "watch:js": "nodemon --watch src/**/*.js --ext js --exec \"run-s js\"",
-    "watch": "concurrently \"watch:*\"",
+    "watch": "run-p watch-*",
     "lint": "run-p --aggregate-output  -c *:lint",
     "fix": "run-p --aggregate-output  -c *:fix",
     "clean": "rimraf dist",
@@ -53,7 +53,6 @@
     "@rollup/plugin-terser": "^0.4.3",
     "autoprefixer": "^10.4.16",
     "clean-css-cli": "^5.6.3",
-    "concurrently": "^8.2.2",
     "core-js": "^3.34.0",
     "cross-env": "^7.0.3",
     "del": "^7.1.0",
@@ -67,15 +66,16 @@
     "npm-run-all2": "^6.1.1",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
-    "prettier": "^3.1.0",
+    "prettier": "^3.1.1",
     "rimraf": "^5.0.5",
-    "rollup": "^4.6.1",
+    "rollup": "^4.8.0",
     "sass": "^1.64.1",
     "stylelint": "^15.11.0",
     "stylelint-config-twbs-bootstrap": "^12.0.0"
   },
   "dependencies": {
     "bootstrap": "3.4.*",
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "validator": "^13.11.0"
   }
 }

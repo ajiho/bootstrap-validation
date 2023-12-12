@@ -10,7 +10,7 @@
 })((function () { 'use strict';
 
   $.fn.bootstrapValidation.i18n = $.extend(true, $.fn.bootstrapValidation.i18n, {
-    notEmpty: {
+    require: {
       default: '请填写必填项目2'
     },
     stringLength: {

@@ -161,4 +161,65 @@ export default {
     }
     return check === 1
   },
+
+  isEmptyObject(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object
+  },
+
+  isObj(value) {
+    return (
+      value &&
+      Object.prototype.toString.call(value) === '[object Object]' &&
+      !Array.isArray(value)
+    )
+  },
+
+  extend(target, ...sources) {
+    if (!sources.length) return target
+    const source = sources.shift()
+
+    if (this.isObj(target) && this.isObj(source)) {
+      for (const key in source) {
+        if (this.isObj(source[key])) {
+          if (!target[key]) Object.assign(target, { [key]: {} })
+          this.extend(target[key], source[key])
+        } else {
+          Object.assign(target, { [key]: source[key] })
+        }
+      }
+    }
+
+    return this.extend(target, ...sources)
+  },
+
+  utf8Length(str) {
+    let s = str.length
+    for (let i = str.length - 1; i >= 0; i--) {
+      let code = str.charCodeAt(i)
+      if (code > 0x7f && code <= 0x7ff) {
+        s++
+      } else if (code > 0x7ff && code <= 0xffff) {
+        s += 2
+      }
+      if (code >= 0xdc00 && code <= 0xdfff) {
+        i--
+      }
+    }
+    return s
+  },
+
+  /**
+   * 批量判断某个对象上是否存在指定的属性
+   * @param {Object} obj
+   * @param {Array} props
+   * @returns {Boolean} 如果有任何一个属性不存在，则返回 false；否则返回 true
+   */
+  checkProps(obj, props) {
+    for (let i = 0; i < props.length; i++) {
+      if (!(props[i] in obj)) {
+        return false
+      }
+    }
+    return true
+  },
 }

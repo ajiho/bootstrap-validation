@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>多个元素具有相同的名称</title>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
@@ -26,18 +26,20 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-lg-3 control-label">用户名</label>
+                <div class="col-lg-5">
+                    <input type="text" class="form-control" name="username" data-bv-notempty data-bv-stringlength="true"
+                        data-bv-stringlength-min="2" data-bv-stringlength-max="10" />
+                </div>
+            </div>
+
 
             <div class="form-group">
                 <label class="col-lg-3 control-label">邮箱</label>
                 <div class="col-lg-5">
-                    <input class="form-control" name="email" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-lg-3 control-label">手机号</label>
-                <div class="col-lg-5">
-                    <input class="form-control" name="phone" />
+                    <input class="form-control" name="email" type="email" data-bv-notempty data-bv-emailaddress
+                        data-bv-emailaddress-message="输入的电子邮件地址无效" />
                 </div>
             </div>
 
@@ -65,7 +67,27 @@
                 </div>
             </div>
 
-
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Editors</label>
+                <div class="col-lg-5">
+                    <input class="form-control" type="text" name="editors[]" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-lg-5">
+                    <input class="form-control" type="text" name="editors[]" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-lg-5">
+                    <input class="form-control" type="text" name="editors[]" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-lg-5">
+                    <input class="form-control" type="text" name="editors[]" />
+                </div>
+            </div>
 
 
 
@@ -82,11 +104,10 @@
         </form>
     </div>
 
-
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../dist/js/bootstrap-validation.js"></script>
-    <script src="../dist/js/i18n/en_US.js"></script>
+    <script src="../dist/js/i18n/zh_CN.js"></script>
 
 
     <script>
@@ -96,72 +117,37 @@
                 .on('init.form.bv', function (e, data) {
                     // console.log($(e.target), data.bv, data.options);
                 }).bootstrapValidation({
-
-                    //排除的字段
-                    excluded: ':disabled, :hidden, :not(:visible)',
-
-                    //反馈图标
-                    feedbackIcons: {
-                        valid: 'glyphicon glyphicon-ok',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh'
-                    },
-                    live: 'enabled', // 可选值 disabled submitted enabled
+                    live: 'enabled', //disabled submitted
                     // message: '无效的值',
                     fields: {
                         username: {
                             trigger: 'focus blur',
                             // message: '用户名无效',
                             rules: {
-                                require: {
-                                    // message: '用户名必填哦'
-                                }
-                            }
-                        },
-                        email: {
-                            trigger: 'input',
-                            rules: {
-                                //必填项
-                                require: true,
-                                //长度
-                                stringLength: {
-                                    min: 6,
-                                    max: 30
-                                }
-                            }
-                        },
-                        phone: {
-                            rules: {
-                                require: {
-                                    message: 'The phone is required and can\'t be empty'
+                                notEmpty: {
+                                    message: '用户名必填哦'
                                 },
-                                remote: {
-                                    type: 'POST',
-                                    url: 'remote.php',
-                                    message: 'The phone is not available',
-                                    delay: 4000
-                                }
                             }
                         },
                         'hobby[]': {//用于测试多选框和单选框
                             message: 'hobby[]-的默认错误消息',
                             rules: {
-                                require: {
+                                notEmpty: {
                                     message: '必须选择一个'
-                                }
+                                },
                             }
                         },
                         xieyi: {
                             // message: '用户名无效',
                             rules: {
-                                require: {
+                                notEmpty: {
                                     message: '请签署我们的协议'
                                 },
                             }
                         },
                         'editors[]': {
                             rules: {
-                                require: {
+                                notEmpty: {
                                     message: '编辑器名称是必需的'
                                 }
                             }

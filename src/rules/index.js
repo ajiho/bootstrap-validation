@@ -1,7 +1,11 @@
-import notEmpty from './notEmpty'
+import require from './require'
 import stringLength from './stringLength'
+import email from './email'
+import remote from './remote'
 
 export default {
-  notEmpty,
+  require,
+  email,
   stringLength,
+  remote,
 }

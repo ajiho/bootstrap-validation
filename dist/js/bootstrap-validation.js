@@ -8,7 +8,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('jquery')) :
   typeof define === 'function' && define.amd ? define(['jquery'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.BootstrapValidation = factory(global.jQuery));
-})(this, (function ($$5) { 'use strict';
+})(this, (function ($$6) { 'use strict';
 
   function _defineProperty(obj, key, value) {
     key = _toPropertyKey(key);
@@ -38,6 +38,10 @@
     var key = _toPrimitive(arg, "string");
     return typeof key === "symbol" ? key : String(key);
   }
+  function _classPrivateFieldGet(receiver, privateMap) {
+    var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get");
+    return _classApplyDescriptorGet(receiver, descriptor);
+  }
   function _classPrivateFieldSet(receiver, privateMap, value) {
     var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set");
     _classApplyDescriptorSet(receiver, descriptor, value);
@@ -48,6 +52,12 @@
       throw new TypeError("attempted to " + action + " private field on non-instance");
     }
     return privateMap.get(receiver);
+  }
+  function _classApplyDescriptorGet(receiver, descriptor) {
+    if (descriptor.get) {
+      return descriptor.get.call(receiver);
+    }
+    return descriptor.value;
   }
   function _classApplyDescriptorSet(receiver, descriptor, value) {
     if (descriptor.set) {
@@ -81,6 +91,10 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
+  function getDefaultExportFromCjs (x) {
+  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+  }
+
   var check = function (it) {
     return it && it.Math === Math && it;
   };
@@ -99,7 +113,7 @@
 
   var objectGetOwnPropertyDescriptor = {};
 
-  var fails$h = function (exec) {
+  var fails$i = function (exec) {
     try {
       return !!exec();
     } catch (error) {
@@ -107,17 +121,17 @@
     }
   };
 
-  var fails$g = fails$h;
+  var fails$h = fails$i;
 
   // Detect IE8's incomplete defineProperty implementation
-  var descriptors = !fails$g(function () {
+  var descriptors = !fails$h(function () {
     // eslint-disable-next-line es/no-object-defineproperty -- required for testing
     return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] !== 7;
   });
 
-  var fails$f = fails$h;
+  var fails$g = fails$i;
 
-  var functionBindNative = !fails$f(function () {
+  var functionBindNative = !fails$g(function () {
     // eslint-disable-next-line es/no-function-prototype-bind -- safe
     var test = (function () { /* empty */ }).bind();
     // eslint-disable-next-line no-prototype-builtins -- safe
@@ -136,15 +150,15 @@
 
   var $propertyIsEnumerable = {}.propertyIsEnumerable;
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-  var getOwnPropertyDescriptor$1 = Object.getOwnPropertyDescriptor;
+  var getOwnPropertyDescriptor$2 = Object.getOwnPropertyDescriptor;
 
   // Nashorn ~ JDK8 bug
-  var NASHORN_BUG = getOwnPropertyDescriptor$1 && !$propertyIsEnumerable.call({ 1: 2 }, 1);
+  var NASHORN_BUG = getOwnPropertyDescriptor$2 && !$propertyIsEnumerable.call({ 1: 2 }, 1);
 
   // `Object.prototype.propertyIsEnumerable` method implementation
   // https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
   objectPropertyIsEnumerable.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
-    var descriptor = getOwnPropertyDescriptor$1(this, V);
+    var descriptor = getOwnPropertyDescriptor$2(this, V);
     return !!descriptor && descriptor.enumerable;
   } : $propertyIsEnumerable;
 
@@ -179,19 +193,19 @@
   };
 
   var uncurryThis$g = functionUncurryThis;
-  var fails$e = fails$h;
-  var classof$3 = classofRaw$2;
+  var fails$f = fails$i;
+  var classof$4 = classofRaw$2;
 
   var $Object$4 = Object;
   var split = uncurryThis$g(''.split);
 
   // fallback for non-array-like ES3 and non-enumerable old V8 strings
-  var indexedObject = fails$e(function () {
+  var indexedObject = fails$f(function () {
     // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
     // eslint-disable-next-line no-prototype-builtins -- safe
     return !$Object$4('z').propertyIsEnumerable(0);
   }) ? function (it) {
-    return classof$3(it) === 'String' ? split(it, '') : $Object$4(it);
+    return classof$4(it) === 'String' ? split(it, '') : $Object$4(it);
   } : $Object$4;
 
   // we can't use just `it == null` since of `document.all` special case
@@ -202,12 +216,12 @@
 
   var isNullOrUndefined$2 = isNullOrUndefined$3;
 
-  var $TypeError$7 = TypeError;
+  var $TypeError$9 = TypeError;
 
   // `RequireObjectCoercible` abstract operation
   // https://tc39.es/ecma262/#sec-requireobjectcoercible
   var requireObjectCoercible$5 = function (it) {
-    if (isNullOrUndefined$2(it)) throw new $TypeError$7("Can't call method on " + it);
+    if (isNullOrUndefined$2(it)) throw new $TypeError$9("Can't call method on " + it);
     return it;
   };
 
@@ -300,13 +314,13 @@
 
   /* eslint-disable es/no-symbol -- required for testing */
   var V8_VERSION = engineV8Version;
-  var fails$d = fails$h;
+  var fails$e = fails$i;
   var global$d = global$g;
 
   var $String$5 = global$d.String;
 
   // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
-  var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$d(function () {
+  var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$e(function () {
     var symbol = Symbol('symbol detection');
     // Chrome 38 Symbol has incorrect toString conversion
     // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
@@ -351,12 +365,12 @@
   var isCallable$e = isCallable$i;
   var tryToString = tryToString$1;
 
-  var $TypeError$6 = TypeError;
+  var $TypeError$8 = TypeError;
 
   // `Assert: IsCallable(argument) is true`
   var aCallable$2 = function (argument) {
     if (isCallable$e(argument)) return argument;
-    throw new $TypeError$6(tryToString(argument) + ' is not a function');
+    throw new $TypeError$8(tryToString(argument) + ' is not a function');
   };
 
   var aCallable$1 = aCallable$2;
@@ -373,7 +387,7 @@
   var isCallable$d = isCallable$i;
   var isObject$7 = isObject$8;
 
-  var $TypeError$5 = TypeError;
+  var $TypeError$7 = TypeError;
 
   // `OrdinaryToPrimitive` abstract operation
   // https://tc39.es/ecma262/#sec-ordinarytoprimitive
@@ -382,7 +396,7 @@
     if (pref === 'string' && isCallable$d(fn = input.toString) && !isObject$7(val = call$7(fn, input))) return val;
     if (isCallable$d(fn = input.valueOf) && !isObject$7(val = call$7(fn, input))) return val;
     if (pref !== 'string' && isCallable$d(fn = input.toString) && !isObject$7(val = call$7(fn, input))) return val;
-    throw new $TypeError$5("Can't convert object to primitive value");
+    throw new $TypeError$7("Can't convert object to primitive value");
   };
 
   var shared$4 = {exports: {}};
@@ -428,12 +442,12 @@
 
   // `ToObject` abstract operation
   // https://tc39.es/ecma262/#sec-toobject
-  var toObject$3 = function (argument) {
+  var toObject$4 = function (argument) {
     return $Object$2(requireObjectCoercible$3(argument));
   };
 
   var uncurryThis$e = functionUncurryThis;
-  var toObject$2 = toObject$3;
+  var toObject$3 = toObject$4;
 
   var hasOwnProperty = uncurryThis$e({}.hasOwnProperty);
 
@@ -441,7 +455,7 @@
   // https://tc39.es/ecma262/#sec-hasownproperty
   // eslint-disable-next-line es/no-object-hasown -- safe
   var hasOwnProperty_1 = Object.hasOwn || function hasOwn(it, key) {
-    return hasOwnProperty(toObject$2(it), key);
+    return hasOwnProperty(toObject$3(it), key);
   };
 
   var uncurryThis$d = functionUncurryThis;
@@ -480,7 +494,7 @@
   var ordinaryToPrimitive = ordinaryToPrimitive$1;
   var wellKnownSymbol$9 = wellKnownSymbol$a;
 
-  var $TypeError$4 = TypeError;
+  var $TypeError$6 = TypeError;
   var TO_PRIMITIVE = wellKnownSymbol$9('toPrimitive');
 
   // `ToPrimitive` abstract operation
@@ -493,7 +507,7 @@
       if (pref === undefined) pref = 'default';
       result = call$6(exoticToPrim, input, pref);
       if (!isObject$6(result) || isSymbol$1(result)) return result;
-      throw new $TypeError$4("Can't convert object to primitive value");
+      throw new $TypeError$6("Can't convert object to primitive value");
     }
     if (pref === undefined) pref = 'number';
     return ordinaryToPrimitive(input, pref);
@@ -520,19 +534,19 @@
     return EXISTS$1 ? document$1.createElement(it) : {};
   };
 
-  var DESCRIPTORS$9 = descriptors;
-  var fails$c = fails$h;
+  var DESCRIPTORS$a = descriptors;
+  var fails$d = fails$i;
   var createElement = documentCreateElement$2;
 
   // Thanks to IE8 for its funny defineProperty
-  var ie8DomDefine = !DESCRIPTORS$9 && !fails$c(function () {
+  var ie8DomDefine = !DESCRIPTORS$a && !fails$d(function () {
     // eslint-disable-next-line es/no-object-defineproperty -- required for testing
     return Object.defineProperty(createElement('div'), 'a', {
       get: function () { return 7; }
     }).a !== 7;
   });
 
-  var DESCRIPTORS$8 = descriptors;
+  var DESCRIPTORS$9 = descriptors;
   var call$5 = functionCall;
   var propertyIsEnumerableModule = objectPropertyIsEnumerable;
   var createPropertyDescriptor$3 = createPropertyDescriptor$4;
@@ -546,7 +560,7 @@
 
   // `Object.getOwnPropertyDescriptor` method
   // https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-  objectGetOwnPropertyDescriptor.f = DESCRIPTORS$8 ? $getOwnPropertyDescriptor$1 : function getOwnPropertyDescriptor(O, P) {
+  objectGetOwnPropertyDescriptor.f = DESCRIPTORS$9 ? $getOwnPropertyDescriptor$1 : function getOwnPropertyDescriptor(O, P) {
     O = toIndexedObject$4(O);
     P = toPropertyKey$1(P);
     if (IE8_DOM_DEFINE$1) try {
@@ -557,12 +571,12 @@
 
   var objectDefineProperty = {};
 
-  var DESCRIPTORS$7 = descriptors;
-  var fails$b = fails$h;
+  var DESCRIPTORS$8 = descriptors;
+  var fails$c = fails$i;
 
   // V8 ~ Chrome 36-
   // https://bugs.chromium.org/p/v8/issues/detail?id=3334
-  var v8PrototypeDefineBug = DESCRIPTORS$7 && fails$b(function () {
+  var v8PrototypeDefineBug = DESCRIPTORS$8 && fails$c(function () {
     // eslint-disable-next-line es/no-object-defineproperty -- required for testing
     return Object.defineProperty(function () { /* empty */ }, 'prototype', {
       value: 42,
@@ -573,21 +587,21 @@
   var isObject$4 = isObject$8;
 
   var $String$3 = String;
-  var $TypeError$3 = TypeError;
+  var $TypeError$5 = TypeError;
 
   // `Assert: Type(argument) is Object`
   var anObject$8 = function (argument) {
     if (isObject$4(argument)) return argument;
-    throw new $TypeError$3($String$3(argument) + ' is not an object');
+    throw new $TypeError$5($String$3(argument) + ' is not an object');
   };
 
-  var DESCRIPTORS$6 = descriptors;
+  var DESCRIPTORS$7 = descriptors;
   var IE8_DOM_DEFINE = ie8DomDefine;
   var V8_PROTOTYPE_DEFINE_BUG$1 = v8PrototypeDefineBug;
   var anObject$7 = anObject$8;
   var toPropertyKey = toPropertyKey$2;
 
-  var $TypeError$2 = TypeError;
+  var $TypeError$4 = TypeError;
   // eslint-disable-next-line es/no-object-defineproperty -- safe
   var $defineProperty = Object.defineProperty;
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
@@ -598,7 +612,7 @@
 
   // `Object.defineProperty` method
   // https://tc39.es/ecma262/#sec-object.defineproperty
-  objectDefineProperty.f = DESCRIPTORS$6 ? V8_PROTOTYPE_DEFINE_BUG$1 ? function defineProperty(O, P, Attributes) {
+  objectDefineProperty.f = DESCRIPTORS$7 ? V8_PROTOTYPE_DEFINE_BUG$1 ? function defineProperty(O, P, Attributes) {
     anObject$7(O);
     P = toPropertyKey(P);
     anObject$7(Attributes);
@@ -620,16 +634,16 @@
     if (IE8_DOM_DEFINE) try {
       return $defineProperty(O, P, Attributes);
     } catch (error) { /* empty */ }
-    if ('get' in Attributes || 'set' in Attributes) throw new $TypeError$2('Accessors not supported');
+    if ('get' in Attributes || 'set' in Attributes) throw new $TypeError$4('Accessors not supported');
     if ('value' in Attributes) O[P] = Attributes.value;
     return O;
   };
 
-  var DESCRIPTORS$5 = descriptors;
+  var DESCRIPTORS$6 = descriptors;
   var definePropertyModule$3 = objectDefineProperty;
   var createPropertyDescriptor$2 = createPropertyDescriptor$4;
 
-  var createNonEnumerableProperty$8 = DESCRIPTORS$5 ? function (object, key, value) {
+  var createNonEnumerableProperty$8 = DESCRIPTORS$6 ? function (object, key, value) {
     return definePropertyModule$3.f(object, key, createPropertyDescriptor$2(1, value));
   } : function (object, key, value) {
     object[key] = value;
@@ -638,17 +652,17 @@
 
   var makeBuiltIn$2 = {exports: {}};
 
-  var DESCRIPTORS$4 = descriptors;
+  var DESCRIPTORS$5 = descriptors;
   var hasOwn$7 = hasOwnProperty_1;
 
   var FunctionPrototype$1 = Function.prototype;
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-  var getDescriptor = DESCRIPTORS$4 && Object.getOwnPropertyDescriptor;
+  var getDescriptor = DESCRIPTORS$5 && Object.getOwnPropertyDescriptor;
 
   var EXISTS = hasOwn$7(FunctionPrototype$1, 'name');
   // additional protection from minified / mangled / dropped function names
   var PROPER = EXISTS && (function something() { /* empty */ }).name === 'something';
-  var CONFIGURABLE = EXISTS && (!DESCRIPTORS$4 || (DESCRIPTORS$4 && getDescriptor(FunctionPrototype$1, 'name').configurable));
+  var CONFIGURABLE = EXISTS && (!DESCRIPTORS$5 || (DESCRIPTORS$5 && getDescriptor(FunctionPrototype$1, 'name').configurable));
 
   var functionName = {
     EXISTS: EXISTS,
@@ -761,10 +775,10 @@
   };
 
   var uncurryThis$b = functionUncurryThis;
-  var fails$a = fails$h;
+  var fails$b = fails$i;
   var isCallable$a = isCallable$i;
   var hasOwn$5 = hasOwnProperty_1;
-  var DESCRIPTORS$3 = descriptors;
+  var DESCRIPTORS$4 = descriptors;
   var CONFIGURABLE_FUNCTION_NAME$1 = functionName.CONFIGURABLE;
   var inspectSource = inspectSource$1;
   var InternalStateModule$1 = internalState;
@@ -778,7 +792,7 @@
   var replace$4 = uncurryThis$b(''.replace);
   var join = uncurryThis$b([].join);
 
-  var CONFIGURABLE_LENGTH = DESCRIPTORS$3 && !fails$a(function () {
+  var CONFIGURABLE_LENGTH = DESCRIPTORS$4 && !fails$b(function () {
     return defineProperty$4(function () { /* empty */ }, 'length', { value: 8 }).length !== 8;
   });
 
@@ -791,7 +805,7 @@
     if (options && options.getter) name = 'get ' + name;
     if (options && options.setter) name = 'set ' + name;
     if (!hasOwn$5(value, 'name') || (CONFIGURABLE_FUNCTION_NAME$1 && value.name !== name)) {
-      if (DESCRIPTORS$3) defineProperty$4(value, 'name', { value: name, configurable: true });
+      if (DESCRIPTORS$4) defineProperty$4(value, 'name', { value: name, configurable: true });
       else value.name = name;
     }
     if (CONFIGURABLE_LENGTH && options && hasOwn$5(options, 'arity') && value.length !== options.arity) {
@@ -799,7 +813,7 @@
     }
     try {
       if (options && hasOwn$5(options, 'constructor') && options.constructor) {
-        if (DESCRIPTORS$3) defineProperty$4(value, 'prototype', { writable: false });
+        if (DESCRIPTORS$4) defineProperty$4(value, 'prototype', { writable: false });
       // in V8 ~ Chrome 53, prototypes of some methods, like `Array.prototype.values`, are non-writable
       } else if (value.prototype) value.prototype = undefined;
     } catch (error) { /* empty */ }
@@ -895,19 +909,19 @@
 
   // `LengthOfArrayLike` abstract operation
   // https://tc39.es/ecma262/#sec-lengthofarraylike
-  var lengthOfArrayLike$1 = function (obj) {
+  var lengthOfArrayLike$2 = function (obj) {
     return toLength$1(obj.length);
   };
 
   var toIndexedObject$3 = toIndexedObject$5;
   var toAbsoluteIndex = toAbsoluteIndex$1;
-  var lengthOfArrayLike = lengthOfArrayLike$1;
+  var lengthOfArrayLike$1 = lengthOfArrayLike$2;
 
   // `Array.prototype.{ indexOf, includes }` methods implementation
   var createMethod$2 = function (IS_INCLUDES) {
     return function ($this, el, fromIndex) {
       var O = toIndexedObject$3($this);
-      var length = lengthOfArrayLike(O);
+      var length = lengthOfArrayLike$1(O);
       var index = toAbsoluteIndex(fromIndex, length);
       var value;
       // Array#includes uses SameValueZero equality algorithm
@@ -1013,7 +1027,7 @@
     }
   };
 
-  var fails$9 = fails$h;
+  var fails$a = fails$i;
   var isCallable$8 = isCallable$i;
 
   var replacement = /#|\.prototype\./;
@@ -1022,7 +1036,7 @@
     var value = data[normalize(feature)];
     return value === POLYFILL ? true
       : value === NATIVE ? false
-      : isCallable$8(detection) ? fails$9(detection)
+      : isCallable$8(detection) ? fails$a(detection)
       : !!detection;
   };
 
@@ -1037,7 +1051,7 @@
   var isForced_1 = isForced$1;
 
   var global$6 = global$g;
-  var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
+  var getOwnPropertyDescriptor$1 = objectGetOwnPropertyDescriptor.f;
   var createNonEnumerableProperty$6 = createNonEnumerableProperty$8;
   var defineBuiltIn$3 = defineBuiltIn$4;
   var defineGlobalProperty = defineGlobalProperty$3;
@@ -1074,7 +1088,7 @@
     if (target) for (key in source) {
       sourceProperty = source[key];
       if (options.dontCallGetSet) {
-        descriptor = getOwnPropertyDescriptor(target, key);
+        descriptor = getOwnPropertyDescriptor$1(target, key);
         targetProperty = descriptor && descriptor.value;
       } else targetProperty = target[key];
       FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
@@ -1115,11 +1129,11 @@
   var isCallable$7 = isCallable$i;
 
   var $String$1 = String;
-  var $TypeError$1 = TypeError;
+  var $TypeError$3 = TypeError;
 
   var aPossiblePrototype$1 = function (argument) {
     if (typeof argument == 'object' || isCallable$7(argument)) return argument;
-    throw new $TypeError$1("Can't set " + $String$1(argument) + ' as a prototype');
+    throw new $TypeError$3("Can't set " + $String$1(argument) + ' as a prototype');
   };
 
   /* eslint-disable no-proto -- safe */
@@ -1206,7 +1220,7 @@
   };
 
   // getting tag from ES6+ `Object.prototype.toString`
-  var classof$2 = TO_STRING_TAG_SUPPORT ? classofRaw$1 : function (it) {
+  var classof$3 = TO_STRING_TAG_SUPPORT ? classofRaw$1 : function (it) {
     var O, tag, result;
     return it === undefined ? 'Undefined' : it === null ? 'Null'
       // @@toStringTag case
@@ -1217,12 +1231,12 @@
       : (result = classofRaw$1(O)) === 'Object' && isCallable$5(O.callee) ? 'Arguments' : result;
   };
 
-  var classof$1 = classof$2;
+  var classof$2 = classof$3;
 
   var $String = String;
 
   var toString$5 = function (argument) {
-    if (classof$1(argument) === 'Symbol') throw new TypeError('Cannot convert a Symbol value to a string');
+    if (classof$2(argument) === 'Symbol') throw new TypeError('Cannot convert a Symbol value to a string');
     return $String(argument);
   };
 
@@ -1259,10 +1273,10 @@
     } return stack;
   };
 
-  var fails$8 = fails$h;
+  var fails$9 = fails$i;
   var createPropertyDescriptor$1 = createPropertyDescriptor$4;
 
-  var errorStackInstallable = !fails$8(function () {
+  var errorStackInstallable = !fails$9(function () {
     var error = new Error('a');
     if (!('stack' in error)) return true;
     // eslint-disable-next-line es/no-object-defineproperty -- safe
@@ -1295,7 +1309,7 @@
   var normalizeStringArgument = normalizeStringArgument$1;
   var installErrorCause = installErrorCause$1;
   var installErrorStack = errorStackInstall;
-  var DESCRIPTORS$2 = descriptors;
+  var DESCRIPTORS$3 = descriptors;
 
   var wrapErrorConstructorWithCause$1 = function (FULL_NAME, wrapper, FORCED, IS_AGGREGATE_ERROR) {
     var STACK_TRACE_LIMIT = 'stackTraceLimit';
@@ -1330,7 +1344,7 @@
     if (ERROR_NAME !== 'Error') {
       if (setPrototypeOf$1) setPrototypeOf$1(WrappedError, BaseError);
       else copyConstructorProperties(WrappedError, BaseError, { name: true });
-    } else if (DESCRIPTORS$2 && STACK_TRACE_LIMIT in OriginalError) {
+    } else if (DESCRIPTORS$3 && STACK_TRACE_LIMIT in OriginalError) {
       proxyAccessor(WrappedError, OriginalError, STACK_TRACE_LIMIT);
       proxyAccessor(WrappedError, OriginalError, 'prepareStackTrace');
     }
@@ -1349,7 +1363,7 @@
   };
 
   /* eslint-disable no-unused-vars -- required for functions `.length` */
-  var $$4 = _export;
+  var $$5 = _export;
   var global$5 = global$g;
   var apply$1 = functionApply;
   var wrapErrorConstructorWithCause = wrapErrorConstructorWithCause$1;
@@ -1358,19 +1372,19 @@
   var WebAssembly = global$5[WEB_ASSEMBLY];
 
   // eslint-disable-next-line es/no-error-cause -- feature detection
-  var FORCED = new Error('e', { cause: 7 }).cause !== 7;
+  var FORCED$1 = new Error('e', { cause: 7 }).cause !== 7;
 
   var exportGlobalErrorCauseWrapper = function (ERROR_NAME, wrapper) {
     var O = {};
-    O[ERROR_NAME] = wrapErrorConstructorWithCause(ERROR_NAME, wrapper, FORCED);
-    $$4({ global: true, constructor: true, arity: 1, forced: FORCED }, O);
+    O[ERROR_NAME] = wrapErrorConstructorWithCause(ERROR_NAME, wrapper, FORCED$1);
+    $$5({ global: true, constructor: true, arity: 1, forced: FORCED$1 }, O);
   };
 
   var exportWebAssemblyErrorCauseWrapper = function (ERROR_NAME, wrapper) {
     if (WebAssembly && WebAssembly[ERROR_NAME]) {
       var O = {};
-      O[ERROR_NAME] = wrapErrorConstructorWithCause(WEB_ASSEMBLY + '.' + ERROR_NAME, wrapper, FORCED);
-      $$4({ target: WEB_ASSEMBLY, stat: true, constructor: true, arity: 1, forced: FORCED }, O);
+      O[ERROR_NAME] = wrapErrorConstructorWithCause(WEB_ASSEMBLY + '.' + ERROR_NAME, wrapper, FORCED$1);
+      $$5({ target: WEB_ASSEMBLY, stat: true, constructor: true, arity: 1, forced: FORCED$1 }, O);
     }
   };
 
@@ -1418,7 +1432,7 @@
     return internalObjectKeys(O, enumBugKeys$1);
   };
 
-  var DESCRIPTORS$1 = descriptors;
+  var DESCRIPTORS$2 = descriptors;
   var V8_PROTOTYPE_DEFINE_BUG = v8PrototypeDefineBug;
   var definePropertyModule = objectDefineProperty;
   var anObject$4 = anObject$8;
@@ -1428,7 +1442,7 @@
   // `Object.defineProperties` method
   // https://tc39.es/ecma262/#sec-object.defineproperties
   // eslint-disable-next-line es/no-object-defineproperties -- safe
-  objectDefineProperties.f = DESCRIPTORS$1 && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
+  objectDefineProperties.f = DESCRIPTORS$2 && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
     anObject$4(O);
     var props = toIndexedObject$1(Properties);
     var keys = objectKeys(Properties);
@@ -1550,9 +1564,9 @@
 
   var iterators = {};
 
-  var fails$7 = fails$h;
+  var fails$8 = fails$i;
 
-  var correctPrototypeGetter = !fails$7(function () {
+  var correctPrototypeGetter = !fails$8(function () {
     function F() { /* empty */ }
     F.prototype.constructor = null;
     // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
@@ -1561,7 +1575,7 @@
 
   var hasOwn$1 = hasOwnProperty_1;
   var isCallable$4 = isCallable$i;
-  var toObject$1 = toObject$3;
+  var toObject$2 = toObject$4;
   var sharedKey = sharedKey$3;
   var CORRECT_PROTOTYPE_GETTER = correctPrototypeGetter;
 
@@ -1573,7 +1587,7 @@
   // https://tc39.es/ecma262/#sec-object.getprototypeof
   // eslint-disable-next-line es/no-object-getprototypeof -- safe
   var objectGetPrototypeOf = CORRECT_PROTOTYPE_GETTER ? $Object.getPrototypeOf : function (O) {
-    var object = toObject$1(O);
+    var object = toObject$2(O);
     if (hasOwn$1(object, IE_PROTO)) return object[IE_PROTO];
     var constructor = object.constructor;
     if (isCallable$4(constructor) && object instanceof constructor) {
@@ -1581,7 +1595,7 @@
     } return object instanceof $Object ? ObjectPrototype : null;
   };
 
-  var fails$6 = fails$h;
+  var fails$7 = fails$i;
   var isCallable$3 = isCallable$i;
   var isObject = isObject$8;
   var getPrototypeOf$1 = objectGetPrototypeOf;
@@ -1606,7 +1620,7 @@
     }
   }
 
-  var NEW_ITERATOR_PROTOTYPE = !isObject(IteratorPrototype$2) || fails$6(function () {
+  var NEW_ITERATOR_PROTOTYPE = !isObject(IteratorPrototype$2) || fails$7(function () {
     var test = {};
     // FF44- legacy iterators case
     return IteratorPrototype$2[ITERATOR$2].call(test) !== test;
@@ -1656,7 +1670,7 @@
     return IteratorConstructor;
   };
 
-  var $$3 = _export;
+  var $$4 = _export;
   var call$3 = functionCall;
   var FunctionName = functionName;
   var isCallable$2 = isCallable$i;
@@ -1744,7 +1758,7 @@
         if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
           defineBuiltIn$1(IterablePrototype, KEY, methods[KEY]);
         }
-      } else $$3({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+      } else $$4({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
     }
 
     // define iterator
@@ -1769,7 +1783,7 @@
   var defineProperty = objectDefineProperty.f;
   var defineIterator = iteratorDefine;
   var createIterResultObject = createIterResultObject$1;
-  var DESCRIPTORS = descriptors;
+  var DESCRIPTORS$1 = descriptors;
 
   var ARRAY_ITERATOR = 'Array Iterator';
   var setInternalState = InternalStateModule.set;
@@ -1819,7 +1833,7 @@
   addToUnscopables('entries');
 
   // V8 ~ Chrome 45- bug
-  if (DESCRIPTORS && values.name !== 'values') try {
+  if (DESCRIPTORS$1 && values.name !== 'values') try {
     defineProperty(values, 'name', { value: 'values' });
   } catch (error) { /* empty */ }
 
@@ -1904,91 +1918,68 @@
 
   handlePrototype(DOMTokenListPrototype, 'DOMTokenList');
 
-  // 版本号
-  const VERSION = '0.5.3';
+  // a string of all valid unicode whitespaces
+  var whitespaces$2 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+    '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
-  //默认选项
-  const DEFAULTS = {
-    // 第一个无效字段将自动聚焦
-    autoFocus: true,
-    //错误消息容器。可以是:
-    // - 'tooltip' 如果要使用引导工具提示显示错误消息
-    // - 'popover' 如果要使用引导弹出窗口显示错误消息
-    // - css选择器指定的容器
-    // 在前两种情况下，由于工具提示/popover应该足够小，因此插件只显示一条错误消息
-    // 您还可以为特定字段定义消息容器
-    container: null,
-    // 表单CSS类
-    elementClass: 'bv-form',
-    // 使用自定义事件名称以避免jQuery调用window.onerror
-    // See https://github.com/nghuuphuoc/bootstrapvalidator/issues/630
-    events: {
-      formInit: 'init.form.bv',
-      formError: 'error.form.bv',
-      formSuccess: 'success.form.bv',
-      fieldAdded: 'added.field.bv',
-      fieldRemoved: 'removed.field.bv',
-      fieldInit: 'init.field.bv',
-      fieldError: 'error.field.bv',
-      fieldSuccess: 'success.field.bv',
-      fieldStatus: 'status.field.bv',
-      validatorError: 'error.validator.bv',
-      validatorSuccess: 'success.validator.bv'
-    },
-    // 指示将不被验证的字段
-    excluded: [':disabled', ':hidden', ':not(:visible)'],
-    //反馈图标
-    feedbackIcons: {
-      valid: null,
-      invalid: null,
-      validating: null
-    },
-    // 使用验证器规则映射字段名称
-    fields: null,
-    // 用于指示元素的CSS选择器由字段组成
-    // 默认情况下，每个字段都放置在<div class=“form group”></div>中
-    // 如果您的表单组包含许多字段，但并非所有字段都需要验证，则应调整此选项
-    group: '.form-group',
-    // 实时验证选项
-    // 可以是3个值之一:
-    // - enabled: 该插件在字段更改后立即验证字段
-    // - disabled: 禁用实时验证。只有在提交表单后才会显示错误消息
-    // - submitted: 表单提交后启用实时验证
-    live: 'enabled',
-    // 默认无效消息
-    message: 'This value is not valid',
-    // 提交按钮选择器
-    // 这些按钮将被禁用，以防止有效表单多次提交
-    submitButtons: '[type="submit"]',
-    // 如果字段长度小于此字符数，则不会对其进行实时验证
-    threshold: null,
-    // 验证字段时是否详细.
-    // 可能值:
-    // - true:  当一个字段有多个验证器时，将分别检查所有验证器，如果多个验证器中出现错误，则将向用户显示所有验证器
-    // - false: 当一个字段有多个验证器时，该字段的验证将在第一次遇到错误时终止。因此，只有与该字段相关的第一条错误消息才会显示给用户
-    verbose: true
+  var uncurryThis$6 = functionUncurryThis;
+  var requireObjectCoercible$2 = requireObjectCoercible$5;
+  var toString$3 = toString$5;
+  var whitespaces$1 = whitespaces$2;
+
+  var replace$2 = uncurryThis$6(''.replace);
+  var ltrim = RegExp('^[' + whitespaces$1 + ']+');
+  var rtrim = RegExp('(^|[^' + whitespaces$1 + '])[' + whitespaces$1 + ']+$');
+
+  // `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+  var createMethod$1 = function (TYPE) {
+    return function ($this) {
+      var string = toString$3(requireObjectCoercible$2($this));
+      if (TYPE & 1) string = replace$2(string, ltrim, '');
+      if (TYPE & 2) string = replace$2(string, rtrim, '$1');
+      return string;
+    };
   };
 
-  //状态
-  const STATUS = {
-    //未验证的
-    not_validated: 'NOT_VALIDATED',
-    //验证中
-    validating: 'VALIDATING',
-    //无效的
-    invalid: 'INVALID',
-    //通过
-    valid: 'VALID'
+  var stringTrim = {
+    // `String.prototype.{ trimLeft, trimStart }` methods
+    // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+    start: createMethod$1(1),
+    // `String.prototype.{ trimRight, trimEnd }` methods
+    // https://tc39.es/ecma262/#sec-string.prototype.trimend
+    end: createMethod$1(2),
+    // `String.prototype.trim` method
+    // https://tc39.es/ecma262/#sec-string.prototype.trim
+    trim: createMethod$1(3)
   };
 
-  //jquery插件名称
-  const NAME = 'bootstrapValidation';
-  var Constants = {
-    VERSION,
-    DEFAULTS,
-    STATUS,
-    NAME
+  var PROPER_FUNCTION_NAME = functionName.PROPER;
+  var fails$6 = fails$i;
+  var whitespaces = whitespaces$2;
+
+  var non = '\u200B\u0085\u180E';
+
+  // check that a method works with the correct list
+  // of whitespaces and has a correct name
+  var stringTrimForced = function (METHOD_NAME) {
+    return fails$6(function () {
+      return !!whitespaces[METHOD_NAME]()
+        || non[METHOD_NAME]() !== non
+        || (PROPER_FUNCTION_NAME && whitespaces[METHOD_NAME].name !== METHOD_NAME);
+    });
   };
+
+  var $$3 = _export;
+  var $trim = stringTrim.trim;
+  var forcedStringTrimMethod = stringTrimForced;
+
+  // `String.prototype.trim` method
+  // https://tc39.es/ecma262/#sec-string.prototype.trim
+  $$3({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
+    trim: function trim() {
+      return $trim(this);
+    }
+  });
 
   var anObject$2 = anObject$8;
 
@@ -2008,7 +1999,7 @@
     return result;
   };
 
-  var fails$5 = fails$h;
+  var fails$5 = fails$i;
   var global$3 = global$g;
 
   // babel-minify and Closure Compiler transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
@@ -2039,7 +2030,7 @@
     UNSUPPORTED_Y: UNSUPPORTED_Y$1
   };
 
-  var fails$4 = fails$h;
+  var fails$4 = fails$i;
   var global$2 = global$g;
 
   // babel-minify and Closure Compiler transpiles RegExp('.', 's') -> /./s and it causes SyntaxError
@@ -2050,7 +2041,7 @@
     return !(re.dotAll && re.test('\n') && re.flags === 's');
   });
 
-  var fails$3 = fails$h;
+  var fails$3 = fails$i;
   var global$1 = global$g;
 
   // babel-minify and Closure Compiler transpiles RegExp('(?<a>b)', 'g') -> /(?<a>b)/g and it causes SyntaxError
@@ -2065,8 +2056,8 @@
   /* eslint-disable regexp/no-empty-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
   /* eslint-disable regexp/no-useless-quantifier -- testing */
   var call$2 = functionCall;
-  var uncurryThis$6 = functionUncurryThis;
-  var toString$3 = toString$5;
+  var uncurryThis$5 = functionUncurryThis;
+  var toString$2 = toString$5;
   var regexpFlags = regexpFlags$1;
   var stickyHelpers = regexpStickyHelpers;
   var shared = sharedExports;
@@ -2078,10 +2069,10 @@
   var nativeReplace = shared('native-string-replace', String.prototype.replace);
   var nativeExec = RegExp.prototype.exec;
   var patchedExec = nativeExec;
-  var charAt$3 = uncurryThis$6(''.charAt);
-  var indexOf = uncurryThis$6(''.indexOf);
-  var replace$2 = uncurryThis$6(''.replace);
-  var stringSlice$3 = uncurryThis$6(''.slice);
+  var charAt$3 = uncurryThis$5(''.charAt);
+  var indexOf = uncurryThis$5(''.indexOf);
+  var replace$1 = uncurryThis$5(''.replace);
+  var stringSlice$3 = uncurryThis$5(''.slice);
 
   var UPDATES_LAST_INDEX_WRONG = (function () {
     var re1 = /a/;
@@ -2102,7 +2093,7 @@
     patchedExec = function exec(string) {
       var re = this;
       var state = getInternalState(re);
-      var str = toString$3(string);
+      var str = toString$2(string);
       var raw = state.raw;
       var result, reCopy, lastIndex, match, i, object, group;
 
@@ -2121,7 +2112,7 @@
       var strCopy = str;
 
       if (sticky) {
-        flags = replace$2(flags, 'y', '');
+        flags = replace$1(flags, 'y', '');
         if (indexOf(flags, 'g') === -1) {
           flags += 'g';
         }
@@ -2188,22 +2179,114 @@
     exec: exec
   });
 
+  // 版本号
+  const VERSION = '0.5.3';
+
+  //默认选项
+  const DEFAULTS = {
+    // 第一个无效字段将自动聚焦,默认是true,还可以为特定字段设置此选项
+    autoFocus: true,
+    //错误消息容器。可以是:
+    // - 'tooltip' 如果要使用引导工具提示显示错误消息
+    // - 'popover' 如果要使用引导弹出窗口显示错误消息
+    // - css选择器指定的容器
+    // 在前两种情况下，由于工具提示/popover应该足够小，因此插件只显示一条错误消息
+    // 您还可以为特定字段定义消息容器
+    //String|Function 指示错误消息的显示位置。这是null默认的
+    container: null,
+    // 表单CSS类
+    elementClass: 'bv-form',
+    // 使用自定义事件名称以避免jQuery调用window.onerror
+    events: {
+      formInit: 'init.form.bv',
+      formError: 'error.form.bv',
+      formSuccess: 'success.form.bv',
+      fieldAdded: 'added.field.bv',
+      fieldRemoved: 'removed.field.bv',
+      fieldInit: 'init.field.bv',
+      fieldError: 'error.field.bv',
+      fieldSuccess: 'success.field.bv',
+      fieldStatus: 'status.field.bv',
+      ruleError: 'error.rule.bv',
+      ruleSuccess: 'success.rule.bv'
+    },
+    // 指示不会被验证的字段，默认下面三种类型的字段不会被验证
+    excluded: [':disabled', ':hidden', ':not(:visible)'],
+    // 反馈图标
+    // - 使用 FontAwesome icons:
+    //  feedbackIcons: {
+    //      valid: 'fa fa-check',
+    //      invalid: 'fa fa-times',
+    //      validating: 'fa fa-refresh'
+    //  }
+    feedbackIcons: {
+      valid: null,
+      invalid: null,
+      validating: null
+    },
+    // 使用验证器规则映射字段名称
+    fields: null,
+    // 用于指示元素的CSS选择器由字段组成
+    // 默认情况下，每个字段都放置在<div class=“form group”></div>中
+    // 如果您的表单组包含许多字段，但并非所有字段都需要验证，则应调整此选项
+    group: '.form-group',
+    // 实时验证选项
+    // 可以是3个值之一:
+    // - enabled: 字段更改后立即验证字段
+    // - disabled: 提交表单后才会显示错误消息
+    // - submitted: 表单提交后启用实时验证
+    live: 'enabled',
+    // 默认无效消息
+    message: '此值无效',
+    // 提交按钮选择器
+    // 这些按钮将被禁用，以防止有效表单多次提交
+    submitButtons: '[type="submit"]',
+    // 如果字段长度小于此字符数，则不会对其进行实时验证 Number
+    threshold: null,
+    // 验证字段时是否详细.
+    // 可能值:
+    // - true:  当一个字段有多个验证器时，将分别检查所有验证器，如果多个验证器中出现错误，则将向用户显示所有验证器
+    // - false: 当一个字段有多个验证器时，该字段的验证将在第一次遇到错误时终止。因此，只有与该字段相关的第一条错误消息才会显示给用户
+    verbose: true
+  };
+
+  //未验证的
+  const STATUS_NOT_VALIDATED = 'NOT_VALIDATED';
+  //验证中
+  const STATUS_VALIDATING = 'VALIDATING';
+  //无效的
+  const STATUS_INVALID = 'INVALID';
+  //通过
+  const STATUS_VALID = 'VALID';
+
+  //jquery插件名称
+  const NAME = 'bootstrapValidation';
+  var Constants = {
+    VERSION,
+    DEFAULTS,
+    STATUS_NOT_VALIDATED,
+    STATUS_VALIDATING,
+    STATUS_INVALID,
+    STATUS_VALID,
+    NAME
+  };
+
   var classofRaw = classofRaw$2;
-  var uncurryThis$5 = functionUncurryThis;
+  var uncurryThis$4 = functionUncurryThis;
 
   var functionUncurryThisClause = function (fn) {
     // Nashorn bug:
     //   https://github.com/zloirock/core-js/issues/1128
     //   https://github.com/zloirock/core-js/issues/1130
-    if (classofRaw(fn) === 'Function') return uncurryThis$5(fn);
+    if (classofRaw(fn) === 'Function') return uncurryThis$4(fn);
   };
 
   // TODO: Remove from `core-js@4` since it's moved to entry points
 
-  var uncurryThis$4 = functionUncurryThisClause;
+  var uncurryThis$3 = functionUncurryThisClause;
   var defineBuiltIn = defineBuiltIn$4;
   var regexpExec$1 = regexpExec$2;
-  var fails$2 = fails$h;
+  var fails$2 = fails$i;
   var wellKnownSymbol$1 = wellKnownSymbol$a;
   var createNonEnumerableProperty = createNonEnumerableProperty$8;
 
@@ -2252,9 +2335,9 @@
       !DELEGATES_TO_EXEC ||
       FORCED
     ) {
-      var uncurriedNativeRegExpMethod = uncurryThis$4(/./[SYMBOL]);
+      var uncurriedNativeRegExpMethod = uncurryThis$3(/./[SYMBOL]);
       var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
-        var uncurriedNativeMethod = uncurryThis$4(nativeMethod);
+        var uncurriedNativeMethod = uncurryThis$3(nativeMethod);
         var $exec = regexp.exec;
         if ($exec === regexpExec$1 || $exec === RegExpPrototype.exec) {
           if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
@@ -2275,18 +2358,18 @@
     if (SHAM) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
   };
 
-  var uncurryThis$3 = functionUncurryThis;
+  var uncurryThis$2 = functionUncurryThis;
   var toIntegerOrInfinity$1 = toIntegerOrInfinity$4;
-  var toString$2 = toString$5;
-  var requireObjectCoercible$2 = requireObjectCoercible$5;
+  var toString$1 = toString$5;
+  var requireObjectCoercible$1 = requireObjectCoercible$5;
 
-  var charAt$2 = uncurryThis$3(''.charAt);
-  var charCodeAt = uncurryThis$3(''.charCodeAt);
-  var stringSlice$2 = uncurryThis$3(''.slice);
+  var charAt$2 = uncurryThis$2(''.charAt);
+  var charCodeAt = uncurryThis$2(''.charCodeAt);
+  var stringSlice$2 = uncurryThis$2(''.slice);
 
-  var createMethod$1 = function (CONVERT_TO_STRING) {
+  var createMethod = function (CONVERT_TO_STRING) {
     return function ($this, pos) {
-      var S = toString$2(requireObjectCoercible$2($this));
+      var S = toString$1(requireObjectCoercible$1($this));
       var position = toIntegerOrInfinity$1(pos);
       var size = S.length;
       var first, second;
@@ -2306,10 +2389,10 @@
   var stringMultibyte = {
     // `String.prototype.codePointAt` method
     // https://tc39.es/ecma262/#sec-string.prototype.codepointat
-    codeAt: createMethod$1(false),
+    codeAt: createMethod(false),
     // `String.prototype.at` method
     // https://github.com/mathiasbynens/String.prototype.at
-    charAt: createMethod$1(true)
+    charAt: createMethod(true)
   };
 
   var charAt$1 = stringMultibyte.charAt;
@@ -2320,13 +2403,13 @@
     return index + (unicode ? charAt$1(S, index).length : 1);
   };
 
-  var uncurryThis$2 = functionUncurryThis;
-  var toObject = toObject$3;
+  var uncurryThis$1 = functionUncurryThis;
+  var toObject$1 = toObject$4;
 
   var floor = Math.floor;
-  var charAt = uncurryThis$2(''.charAt);
-  var replace$1 = uncurryThis$2(''.replace);
-  var stringSlice$1 = uncurryThis$2(''.slice);
+  var charAt = uncurryThis$1(''.charAt);
+  var replace = uncurryThis$1(''.replace);
+  var stringSlice$1 = uncurryThis$1(''.slice);
   // eslint-disable-next-line redos/no-vulnerable -- safe
   var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d{1,2}|<[^>]*>)/g;
   var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d{1,2})/g;
@@ -2338,10 +2421,10 @@
     var m = captures.length;
     var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
     if (namedCaptures !== undefined) {
-      namedCaptures = toObject(namedCaptures);
+      namedCaptures = toObject$1(namedCaptures);
       symbols = SUBSTITUTION_SYMBOLS;
     }
-    return replace$1(replacement, symbols, function (match, ch) {
+    return replace(replacement, symbols, function (match, ch) {
       var capture;
       switch (charAt(ch, 0)) {
         case '$': return '$';
@@ -2369,10 +2452,10 @@
   var call$1 = functionCall;
   var anObject$1 = anObject$8;
   var isCallable$1 = isCallable$i;
-  var classof = classofRaw$2;
+  var classof$1 = classofRaw$2;
   var regexpExec = regexpExec$2;
 
-  var $TypeError = TypeError;
+  var $TypeError$2 = TypeError;
 
   // `RegExpExec` abstract operation
   // https://tc39.es/ecma262/#sec-regexpexec
@@ -2383,22 +2466,22 @@
       if (result !== null) anObject$1(result);
       return result;
     }
-    if (classof(R) === 'RegExp') return call$1(regexpExec, R, S);
-    throw new $TypeError('RegExp#exec called on incompatible receiver');
+    if (classof$1(R) === 'RegExp') return call$1(regexpExec, R, S);
+    throw new $TypeError$2('RegExp#exec called on incompatible receiver');
   };
 
   var apply = functionApply;
   var call = functionCall;
-  var uncurryThis$1 = functionUncurryThis;
+  var uncurryThis = functionUncurryThis;
   var fixRegExpWellKnownSymbolLogic = fixRegexpWellKnownSymbolLogic;
-  var fails$1 = fails$h;
+  var fails$1 = fails$i;
   var anObject = anObject$8;
   var isCallable = isCallable$i;
   var isNullOrUndefined = isNullOrUndefined$3;
   var toIntegerOrInfinity = toIntegerOrInfinity$4;
   var toLength = toLength$2;
-  var toString$1 = toString$5;
-  var requireObjectCoercible$1 = requireObjectCoercible$5;
+  var toString = toString$5;
+  var requireObjectCoercible = requireObjectCoercible$5;
   var advanceStringIndex = advanceStringIndex$1;
   var getMethod = getMethod$2;
   var getSubstitution = getSubstitution$1;
@@ -2408,10 +2491,10 @@
   var REPLACE = wellKnownSymbol('replace');
   var max = Math.max;
   var min = Math.min;
-  var concat = uncurryThis$1([].concat);
-  var push = uncurryThis$1([].push);
-  var stringIndexOf = uncurryThis$1(''.indexOf);
-  var stringSlice = uncurryThis$1(''.slice);
+  var concat = uncurryThis([].concat);
+  var push = uncurryThis([].push);
+  var stringIndexOf = uncurryThis(''.indexOf);
+  var stringSlice = uncurryThis(''.slice);
 
   var maybeToString = function (it) {
     return it === undefined ? it : String(it);
@@ -2451,17 +2534,17 @@
       // `String.prototype.replace` method
       // https://tc39.es/ecma262/#sec-string.prototype.replace
       function replace(searchValue, replaceValue) {
-        var O = requireObjectCoercible$1(this);
+        var O = requireObjectCoercible(this);
         var replacer = isNullOrUndefined(searchValue) ? undefined : getMethod(searchValue, REPLACE);
         return replacer
           ? call(replacer, searchValue, O, replaceValue)
-          : call(nativeReplace, toString$1(O), searchValue, replaceValue);
+          : call(nativeReplace, toString(O), searchValue, replaceValue);
       },
       // `RegExp.prototype[@@replace]` method
       // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
       function (string, replaceValue) {
         var rx = anObject(this);
-        var S = toString$1(string);
+        var S = toString(string);
 
         if (
           typeof replaceValue == 'string' &&
@@ -2473,7 +2556,7 @@
         }
 
         var functionalReplace = isCallable(replaceValue);
-        if (!functionalReplace) replaceValue = toString$1(replaceValue);
+        if (!functionalReplace) replaceValue = toString(replaceValue);
 
         var global = rx.global;
         var fullUnicode;
@@ -2491,7 +2574,7 @@
           push(results, result);
           if (!global) break;
 
-          var matchStr = toString$1(result[0]);
+          var matchStr = toString(result[0]);
           if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
         }
 
@@ -2500,7 +2583,7 @@
         for (var i = 0; i < results.length; i++) {
           result = results[i];
 
-          var matched = toString$1(result[0]);
+          var matched = toString(result[0]);
           var position = max(min(toIntegerOrInfinity(result.index), S.length), 0);
           var captures = [];
           var replacement;
@@ -2514,7 +2597,7 @@
           if (functionalReplace) {
             var replacerArgs = concat([matched], captures, position, S);
             if (namedCaptures !== undefined) push(replacerArgs, namedCaptures);
-            replacement = toString$1(apply(replaceValue, undefined, replacerArgs));
+            replacement = toString(apply(replaceValue, undefined, replacerArgs));
           } else {
             replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
           }
@@ -2666,90 +2749,85 @@
         check = ((check || modulus) * 2 % (modulus + 1) + alphabet.indexOf(value.charAt(i))) % modulus;
       }
       return check === 1;
-    }
-  };
-
-  // a string of all valid unicode whitespaces
-  var whitespaces$2 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
-    '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-
-  var uncurryThis = functionUncurryThis;
-  var requireObjectCoercible = requireObjectCoercible$5;
-  var toString = toString$5;
-  var whitespaces$1 = whitespaces$2;
-
-  var replace = uncurryThis(''.replace);
-  var ltrim = RegExp('^[' + whitespaces$1 + ']+');
-  var rtrim = RegExp('(^|[^' + whitespaces$1 + '])[' + whitespaces$1 + ']+$');
-
-  // `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-  var createMethod = function (TYPE) {
-    return function ($this) {
-      var string = toString(requireObjectCoercible($this));
-      if (TYPE & 1) string = replace(string, ltrim, '');
-      if (TYPE & 2) string = replace(string, rtrim, '$1');
-      return string;
-    };
-  };
-
-  var stringTrim = {
-    // `String.prototype.{ trimLeft, trimStart }` methods
-    // https://tc39.es/ecma262/#sec-string.prototype.trimstart
-    start: createMethod(1),
-    // `String.prototype.{ trimRight, trimEnd }` methods
-    // https://tc39.es/ecma262/#sec-string.prototype.trimend
-    end: createMethod(2),
-    // `String.prototype.trim` method
-    // https://tc39.es/ecma262/#sec-string.prototype.trim
-    trim: createMethod(3)
-  };
-
-  var PROPER_FUNCTION_NAME = functionName.PROPER;
-  var fails = fails$h;
-  var whitespaces = whitespaces$2;
-
-  var non = '\u200B\u0085\u180E';
-
-  // check that a method works with the correct list
-  // of whitespaces and has a correct name
-  var stringTrimForced = function (METHOD_NAME) {
-    return fails(function () {
-      return !!whitespaces[METHOD_NAME]()
-        || non[METHOD_NAME]() !== non
-        || (PROPER_FUNCTION_NAME && whitespaces[METHOD_NAME].name !== METHOD_NAME);
-    });
-  };
-
-  var $$1 = _export;
-  var $trim = stringTrim.trim;
-  var forcedStringTrimMethod = stringTrimForced;
-
-  // `String.prototype.trim` method
-  // https://tc39.es/ecma262/#sec-string.prototype.trim
-  $$1({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
-    trim: function trim() {
-      return $trim(this);
-    }
-  });
-
-  var notEmpty = {
-    enableByHtml5($field) {
-      let required = $field.attr('required') + '';
-      return 'required' === required || 'true' === required;
+    },
+    isEmptyObject(obj) {
+      return Object.keys(obj).length === 0 && obj.constructor === Object;
+    },
+    isObj(value) {
+      return value && Object.prototype.toString.call(value) === '[object Object]' && !Array.isArray(value);
+    },
+    extend(target) {
+      for (var _len = arguments.length, sources = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        sources[_key - 1] = arguments[_key];
+      }
+      if (!sources.length) return target;
+      const source = sources.shift();
+      if (this.isObj(target) && this.isObj(source)) {
+        for (const key in source) {
+          if (this.isObj(source[key])) {
+            if (!target[key]) Object.assign(target, {
+              [key]: {}
+            });
+            this.extend(target[key], source[key]);
+          } else {
+            Object.assign(target, {
+              [key]: source[key]
+            });
+          }
+        }
+      }
+      return this.extend(target, ...sources);
+    },
+    utf8Length(str) {
+      let s = str.length;
+      for (let i = str.length - 1; i >= 0; i--) {
+        let code = str.charCodeAt(i);
+        if (code > 0x7f && code <= 0x7ff) {
+          s++;
+        } else if (code > 0x7ff && code <= 0xffff) {
+          s += 2;
+        }
+        if (code >= 0xdc00 && code <= 0xdfff) {
+          i--;
+        }
+      }
+      return s;
     },
     /**
-     * Check if input value is empty or not
+     * 批量判断某个对象上是否存在指定的属性
+     * @param {Object} obj 
+     * @param {Array} props 
+     * @returns {Boolean} 如果有任何一个属性不存在，则返回 false；否则返回 true
+     */
+    checkProps(obj, props) {
+      for (let i = 0; i < props.length; i++) {
+        if (!(props[i] in obj)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  };
+
+  var require = {
+    //断给定的 $field 元素是否启用了 HTML5 的 required 属性
+    //为 true，则表示该元素要求必填；如果返回值为 false，则表示该元素不要求必填
+    enableByHtml5($field) {
+      let required = $field.prop('required');
+      return required === true;
+    },
+    /**
+     * 检查输入值是否为空
      *
-     * @param {BootstrapValidator} validator The validator plugin instance
-     * @param {jQuery} $field Field element
+     * @param {BootstrapValidation} validation 验证器插件实例
+     * @param {jQuery} $field 字段元素
      * @param {Object} options
      * @returns {Boolean}
      */
-    validate(validator, $field, options) {
-      console.log(options);
+    rule(validation, $field, options) {
       let type = $field.attr('type');
       if ('radio' === type || 'checkbox' === type) {
-        return validator.getFieldElements($field.attr('data-bv-field')).filter(':checked').length > 0;
+        return validation.getFieldElements($field.attr('data-bv-field')).filter(':checked').length > 0;
       }
       if ('number' === type && $field.get(0).validity && $field.get(0).validity.badInput === true) {
         return true;
@@ -2767,9 +2845,9 @@
       utf8bytes: 'utf8Bytes'
     },
     enableByHtml5: function ($field) {
-      let options = {},
-        maxLength = $field.attr('maxlength'),
-        minLength = $field.attr('minlength');
+      let options = {};
+      let maxLength = $field.attr('maxlength');
+      let minLength = $field.attr('minlength');
       if (maxLength) {
         options.max = parseInt(maxLength, 10);
       }
@@ -2779,66 +2857,51 @@
       return $.isEmptyObject(options) ? false : options;
     },
     /**
-     * Check if the length of element value is less or more than given number
+     * 检查元素值的长度是否小于或大于给定的数字
      *
-     * @param {BootstrapValidator} validator The validator plugin instance
-     * @param {jQuery} $field Field element
-     * @param {Object} options Consists of following keys:
+     * @param {bootstrapValidation} validation 验证器插件实例
+     * @param {jQuery} $field 字段元素
+     * @param {Object} options 由以下键组成:
      * - min
      * - max
-     * At least one of two keys is required
-     * The min, max keys define the number which the field value compares to. min, max can be
-     *      - A number
-     *      - Name of field which its value defines the number
-     *      - Name of callback function that returns the number
-     *      - A callback function that returns the number
+     *      - 数字
+     *      - 字段的名称，其值定义数字
+     *      - 返回数字的回调函数的名称
+     *      - 返回数字的回调函数
      *
-     * - message: The invalid message
-     * - trim: Indicate the length will be calculated after trimming the value or not. It is false, by default
-     * - utf8bytes: Evaluate string length in UTF-8 bytes, default to false
+     * - message: 无效消息
+     * - trim: 指示是否在修剪值后计算长度。默认情况下为false
+     * - utf8bytes: 以UTF-8字节计算字符串长度，默认为false
      * @returns {Object}
      */
-    validate: function (validator, $field, options) {
+    rule: function (validation, $field, options) {
       let value = $field.val();
+
+      // console.log(validation, $field, options);
+
       if (options.trim === true || options.trim === 'true') {
         value = $.trim(value);
       }
       if (value === '') {
         return true;
       }
-      let min = $.isNumeric(options.min) ? options.min : validator.getDynamicOption($field, options.min),
-        max = $.isNumeric(options.max) ? options.max : validator.getDynamicOption($field, options.max),
-        // Credit to http://stackoverflow.com/a/23329386 (@lovasoa) for UTF-8 byte length code
-        utf8Length = function (str) {
-          let s = str.length;
-          for (let i = str.length - 1; i >= 0; i--) {
-            let code = str.charCodeAt(i);
-            if (code > 0x7f && code <= 0x7ff) {
-              s++;
-            } else if (code > 0x7ff && code <= 0xffff) {
-              s += 2;
-            }
-            if (code >= 0xdc00 && code <= 0xdfff) {
-              i--;
-            }
-          }
-          return s;
-        },
-        length = options.utf8Bytes ? utf8Length(value) : value.length,
-        isValid = true,
-        message = options.message || $.fn.bootstrapValidation.i18n.stringLength['default'];
+      let min = $.isNumeric(options.min) ? options.min : validation.getDynamicOption($field, options.min);
+      let max = $.isNumeric(options.max) ? options.max : validation.getDynamicOption($field, options.max);
+      let isValid = true;
+      let length = options.utf8Bytes ? Utils.utf8Length(value) : value.length;
+      let message = options.message || $.fn[Constants.NAME].i18n.stringLength['default'];
       if (min && length < parseInt(min, 10) || max && length > parseInt(max, 10)) {
         isValid = false;
       }
       switch (true) {
         case !!min && !!max:
-          message = Utils.format(options.message || $.fn.bootstrapValidation.i18n.stringLength.between, [parseInt(min, 10), parseInt(max, 10)]);
+          message = Utils.format(options.message || $.fn[Constants.NAME].i18n.stringLength.between, [parseInt(min, 10), parseInt(max, 10)]);
           break;
         case !!min:
-          message = Utils.format(options.message || $.fn.bootstrapValidation.i18n.stringLength.more, parseInt(min, 10));
+          message = Utils.format(options.message || $.fn[Constants.NAME].i18n.stringLength.more, parseInt(min, 10));
           break;
         case !!max:
-          message = Utils.format(options.message || $.fn.bootstrapValidation.i18n.stringLength.less, parseInt(max, 10));
+          message = Utils.format(options.message || $.fn[Constants.NAME].i18n.stringLength.less, parseInt(max, 10));
           break;
       }
       return {
@@ -2848,69 +2911,1393 @@
     }
   };
 
-  var Rules = {
-    notEmpty,
-    stringLength
+  var classof = classofRaw$2;
+
+  // `IsArray` abstract operation
+  // https://tc39.es/ecma262/#sec-isarray
+  // eslint-disable-next-line es/no-array-isarray -- safe
+  var isArray$1 = Array.isArray || function isArray(argument) {
+    return classof(argument) === 'Array';
   };
 
+  var DESCRIPTORS = descriptors;
+  var isArray = isArray$1;
+
+  var $TypeError$1 = TypeError;
+  // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+  var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+  // Safari < 13 does not throw an error in this case
+  var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS && !function () {
+    // makes no sense without proper strict mode support
+    if (this !== undefined) return true;
+    try {
+      // eslint-disable-next-line es/no-object-defineproperty -- safe
+      Object.defineProperty([], 'length', { writable: false }).length = 1;
+    } catch (error) {
+      return error instanceof TypeError;
+    }
+  }();
+
+  var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
+    if (isArray(O) && !getOwnPropertyDescriptor(O, 'length').writable) {
+      throw new $TypeError$1('Cannot set read only .length');
+    } return O.length = length;
+  } : function (O, length) {
+    return O.length = length;
+  };
+
+  var $TypeError = TypeError;
+  var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF; // 2 ** 53 - 1 == 9007199254740991
+
+  var doesNotExceedSafeInteger$1 = function (it) {
+    if (it > MAX_SAFE_INTEGER) throw $TypeError('Maximum allowed index exceeded');
+    return it;
+  };
+
+  var $$1 = _export;
+  var toObject = toObject$4;
+  var lengthOfArrayLike = lengthOfArrayLike$2;
+  var setArrayLength = arraySetLength;
+  var doesNotExceedSafeInteger = doesNotExceedSafeInteger$1;
+  var fails = fails$i;
+
+  var INCORRECT_TO_LENGTH = fails(function () {
+    return [].push.call({ length: 0x100000000 }, 1) !== 4294967297;
+  });
+
+  // V8 and Safari <= 15.4, FF < 23 throws InternalError
+  // https://bugs.chromium.org/p/v8/issues/detail?id=12681
+  var properErrorOnNonWritableLength = function () {
+    try {
+      // eslint-disable-next-line es/no-object-defineproperty -- safe
+      Object.defineProperty([], 'length', { writable: false }).push();
+    } catch (error) {
+      return error instanceof TypeError;
+    }
+  };
+
+  var FORCED = INCORRECT_TO_LENGTH || !properErrorOnNonWritableLength();
+
+  // `Array.prototype.push` method
+  // https://tc39.es/ecma262/#sec-array.prototype.push
+  $$1({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
+    // eslint-disable-next-line no-unused-vars -- required for `.length`
+    push: function push(item) {
+      var O = toObject(this);
+      var len = lengthOfArrayLike(O);
+      var argCount = arguments.length;
+      doesNotExceedSafeInteger(len + argCount);
+      for (var i = 0; i < argCount; i++) {
+        O[len] = arguments[i];
+        len++;
+      }
+      setArrayLength(O, len);
+      return len;
+    }
+  });
+
+  var isEmail$1 = {exports: {}};
+
+  var assertString = {exports: {}};
+
+  (function (module, exports) {
+
+  	Object.defineProperty(exports, "__esModule", {
+  	  value: true
+  	});
+  	exports.default = assertString;
+
+  	function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+  	function assertString(input) {
+  	  var isString = typeof input === 'string' || input instanceof String;
+
+  	  if (!isString) {
+  	    var invalidType = _typeof(input);
+
+  	    if (input === null) invalidType = 'null';else if (invalidType === 'object') invalidType = input.constructor.name;
+  	    throw new TypeError("Expected a string but received a ".concat(invalidType));
+  	  }
+  	}
+
+  	module.exports = exports.default;
+  	module.exports.default = exports.default; 
+  } (assertString, assertString.exports));
+
+  var assertStringExports = assertString.exports;
+
+  var isByteLength = {exports: {}};
+
+  (function (module, exports) {
+
+  	Object.defineProperty(exports, "__esModule", {
+  	  value: true
+  	});
+  	exports.default = isByteLength;
+
+  	var _assertString = _interopRequireDefault(assertStringExports);
+
+  	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  	function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+  	/* eslint-disable prefer-rest-params */
+  	function isByteLength(str, options) {
+  	  (0, _assertString.default)(str);
+  	  var min;
+  	  var max;
+
+  	  if (_typeof(options) === 'object') {
+  	    min = options.min || 0;
+  	    max = options.max;
+  	  } else {
+  	    // backwards compatibility: isByteLength(str, min [, max])
+  	    min = arguments[1];
+  	    max = arguments[2];
+  	  }
+
+  	  var len = encodeURI(str).split(/%..|./).length - 1;
+  	  return len >= min && (typeof max === 'undefined' || len <= max);
+  	}
+
+  	module.exports = exports.default;
+  	module.exports.default = exports.default; 
+  } (isByteLength, isByteLength.exports));
+
+  var isByteLengthExports = isByteLength.exports;
+
+  var isFQDN = {exports: {}};
+
+  var merge = {exports: {}};
+
+  (function (module, exports) {
+
+  	Object.defineProperty(exports, "__esModule", {
+  	  value: true
+  	});
+  	exports.default = merge;
+
+  	function merge() {
+  	  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  	  var defaults = arguments.length > 1 ? arguments[1] : undefined;
+
+  	  for (var key in defaults) {
+  	    if (typeof obj[key] === 'undefined') {
+  	      obj[key] = defaults[key];
+  	    }
+  	  }
+
+  	  return obj;
+  	}
+
+  	module.exports = exports.default;
+  	module.exports.default = exports.default; 
+  } (merge, merge.exports));
+
+  var mergeExports = merge.exports;
+
+  (function (module, exports) {
+
+  	Object.defineProperty(exports, "__esModule", {
+  	  value: true
+  	});
+  	exports.default = isFQDN;
+
+  	var _assertString = _interopRequireDefault(assertStringExports);
+
+  	var _merge = _interopRequireDefault(mergeExports);
+
+  	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  	var default_fqdn_options = {
+  	  require_tld: true,
+  	  allow_underscores: false,
+  	  allow_trailing_dot: false,
+  	  allow_numeric_tld: false,
+  	  allow_wildcard: false,
+  	  ignore_max_length: false
+  	};
+
+  	function isFQDN(str, options) {
+  	  (0, _assertString.default)(str);
+  	  options = (0, _merge.default)(options, default_fqdn_options);
+  	  /* Remove the optional trailing dot before checking validity */
+
+  	  if (options.allow_trailing_dot && str[str.length - 1] === '.') {
+  	    str = str.substring(0, str.length - 1);
+  	  }
+  	  /* Remove the optional wildcard before checking validity */
+
+
+  	  if (options.allow_wildcard === true && str.indexOf('*.') === 0) {
+  	    str = str.substring(2);
+  	  }
+
+  	  var parts = str.split('.');
+  	  var tld = parts[parts.length - 1];
+
+  	  if (options.require_tld) {
+  	    // disallow fqdns without tld
+  	    if (parts.length < 2) {
+  	      return false;
+  	    }
+
+  	    if (!options.allow_numeric_tld && !/^([a-z\u00A1-\u00A8\u00AA-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
+  	      return false;
+  	    } // disallow spaces
+
+
+  	    if (/\s/.test(tld)) {
+  	      return false;
+  	    }
+  	  } // reject numeric TLDs
+
+
+  	  if (!options.allow_numeric_tld && /^\d+$/.test(tld)) {
+  	    return false;
+  	  }
+
+  	  return parts.every(function (part) {
+  	    if (part.length > 63 && !options.ignore_max_length) {
+  	      return false;
+  	    }
+
+  	    if (!/^[a-z_\u00a1-\uffff0-9-]+$/i.test(part)) {
+  	      return false;
+  	    } // disallow full-width chars
+
+
+  	    if (/[\uff01-\uff5e]/.test(part)) {
+  	      return false;
+  	    } // disallow parts starting or ending with hyphen
+
+
+  	    if (/^-|-$/.test(part)) {
+  	      return false;
+  	    }
+
+  	    if (!options.allow_underscores && /_/.test(part)) {
+  	      return false;
+  	    }
+
+  	    return true;
+  	  });
+  	}
+
+  	module.exports = exports.default;
+  	module.exports.default = exports.default; 
+  } (isFQDN, isFQDN.exports));
+
+  var isFQDNExports = isFQDN.exports;
+
+  var isIP = {exports: {}};
+
+  (function (module, exports) {
+
+  	Object.defineProperty(exports, "__esModule", {
+  	  value: true
+  	});
+  	exports.default = isIP;
+
+  	var _assertString = _interopRequireDefault(assertStringExports);
+
+  	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  	/**
+  	11.3.  Examples
+
+  	   The following addresses
+
+  	             fe80::1234 (on the 1st link of the node)
+  	             ff02::5678 (on the 5th link of the node)
+  	             ff08::9abc (on the 10th organization of the node)
+
+  	   would be represented as follows:
+
+  	             fe80::1234%1
+  	             ff02::5678%5
+  	             ff08::9abc%10
+
+  	   (Here we assume a natural translation from a zone index to the
+  	   <zone_id> part, where the Nth zone of any scope is translated into
+  	   "N".)
+
+  	   If we use interface names as <zone_id>, those addresses could also be
+  	   represented as follows:
+
+  	            fe80::1234%ne0
+  	            ff02::5678%pvc1.3
+  	            ff08::9abc%interface10
+
+  	   where the interface "ne0" belongs to the 1st link, "pvc1.3" belongs
+  	   to the 5th link, and "interface10" belongs to the 10th organization.
+  	 * * */
+  	var IPv4SegmentFormat = '(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])';
+  	var IPv4AddressFormat = "(".concat(IPv4SegmentFormat, "[.]){3}").concat(IPv4SegmentFormat);
+  	var IPv4AddressRegExp = new RegExp("^".concat(IPv4AddressFormat, "$"));
+  	var IPv6SegmentFormat = '(?:[0-9a-fA-F]{1,4})';
+  	var IPv6AddressRegExp = new RegExp('^(' + "(?:".concat(IPv6SegmentFormat, ":){7}(?:").concat(IPv6SegmentFormat, "|:)|") + "(?:".concat(IPv6SegmentFormat, ":){6}(?:").concat(IPv4AddressFormat, "|:").concat(IPv6SegmentFormat, "|:)|") + "(?:".concat(IPv6SegmentFormat, ":){5}(?::").concat(IPv4AddressFormat, "|(:").concat(IPv6SegmentFormat, "){1,2}|:)|") + "(?:".concat(IPv6SegmentFormat, ":){4}(?:(:").concat(IPv6SegmentFormat, "){0,1}:").concat(IPv4AddressFormat, "|(:").concat(IPv6SegmentFormat, "){1,3}|:)|") + "(?:".concat(IPv6SegmentFormat, ":){3}(?:(:").concat(IPv6SegmentFormat, "){0,2}:").concat(IPv4AddressFormat, "|(:").concat(IPv6SegmentFormat, "){1,4}|:)|") + "(?:".concat(IPv6SegmentFormat, ":){2}(?:(:").concat(IPv6SegmentFormat, "){0,3}:").concat(IPv4AddressFormat, "|(:").concat(IPv6SegmentFormat, "){1,5}|:)|") + "(?:".concat(IPv6SegmentFormat, ":){1}(?:(:").concat(IPv6SegmentFormat, "){0,4}:").concat(IPv4AddressFormat, "|(:").concat(IPv6SegmentFormat, "){1,6}|:)|") + "(?::((?::".concat(IPv6SegmentFormat, "){0,5}:").concat(IPv4AddressFormat, "|(?::").concat(IPv6SegmentFormat, "){1,7}|:))") + ')(%[0-9a-zA-Z-.:]{1,})?$');
+
+  	function isIP(str) {
+  	  var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  	  (0, _assertString.default)(str);
+  	  version = String(version);
+
+  	  if (!version) {
+  	    return isIP(str, 4) || isIP(str, 6);
+  	  }
+
+  	  if (version === '4') {
+  	    return IPv4AddressRegExp.test(str);
+  	  }
+
+  	  if (version === '6') {
+  	    return IPv6AddressRegExp.test(str);
+  	  }
+
+  	  return false;
+  	}
+
+  	module.exports = exports.default;
+  	module.exports.default = exports.default; 
+  } (isIP, isIP.exports));
+
+  var isIPExports = isIP.exports;
+
+  (function (module, exports) {
+
+  	Object.defineProperty(exports, "__esModule", {
+  	  value: true
+  	});
+  	exports.default = isEmail;
+
+  	var _assertString = _interopRequireDefault(assertStringExports);
+
+  	var _isByteLength = _interopRequireDefault(isByteLengthExports);
+
+  	var _isFQDN = _interopRequireDefault(isFQDNExports);
+
+  	var _isIP = _interopRequireDefault(isIPExports);
+
+  	var _merge = _interopRequireDefault(mergeExports);
+
+  	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  	var default_email_options = {
+  	  allow_display_name: false,
+  	  allow_underscores: false,
+  	  require_display_name: false,
+  	  allow_utf8_local_part: true,
+  	  require_tld: true,
+  	  blacklisted_chars: '',
+  	  ignore_max_length: false,
+  	  host_blacklist: [],
+  	  host_whitelist: []
+  	};
+  	/* eslint-disable max-len */
+
+  	/* eslint-disable no-control-regex */
+
+  	var splitNameAddress = /^([^\x00-\x1F\x7F-\x9F\cX]+)</i;
+  	var emailUserPart = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~]+$/i;
+  	var gmailUserPart = /^[a-z\d]+$/;
+  	var quotedEmailUser = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f]))*$/i;
+  	var emailUserUtf8Part = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\u00A1-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+$/i;
+  	var quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*$/i;
+  	var defaultMaxEmailLength = 254;
+  	/* eslint-enable max-len */
+
+  	/* eslint-enable no-control-regex */
+
+  	/**
+  	 * Validate display name according to the RFC2822: https://tools.ietf.org/html/rfc2822#appendix-A.1.2
+  	 * @param {String} display_name
+  	 */
+
+  	function validateDisplayName(display_name) {
+  	  var display_name_without_quotes = display_name.replace(/^"(.+)"$/, '$1'); // display name with only spaces is not valid
+
+  	  if (!display_name_without_quotes.trim()) {
+  	    return false;
+  	  } // check whether display name contains illegal character
+
+
+  	  var contains_illegal = /[\.";<>]/.test(display_name_without_quotes);
+
+  	  if (contains_illegal) {
+  	    // if contains illegal characters,
+  	    // must to be enclosed in double-quotes, otherwise it's not a valid display name
+  	    if (display_name_without_quotes === display_name) {
+  	      return false;
+  	    } // the quotes in display name must start with character symbol \
+
+
+  	    var all_start_with_back_slash = display_name_without_quotes.split('"').length === display_name_without_quotes.split('\\"').length;
+
+  	    if (!all_start_with_back_slash) {
+  	      return false;
+  	    }
+  	  }
+
+  	  return true;
+  	}
+
+  	function isEmail(str, options) {
+  	  (0, _assertString.default)(str);
+  	  options = (0, _merge.default)(options, default_email_options);
+
+  	  if (options.require_display_name || options.allow_display_name) {
+  	    var display_email = str.match(splitNameAddress);
+
+  	    if (display_email) {
+  	      var display_name = display_email[1]; // Remove display name and angle brackets to get email address
+  	      // Can be done in the regex but will introduce a ReDOS (See  #1597 for more info)
+
+  	      str = str.replace(display_name, '').replace(/(^<|>$)/g, ''); // sometimes need to trim the last space to get the display name
+  	      // because there may be a space between display name and email address
+  	      // eg. myname <address@gmail.com>
+  	      // the display name is `myname` instead of `myname `, so need to trim the last space
+
+  	      if (display_name.endsWith(' ')) {
+  	        display_name = display_name.slice(0, -1);
+  	      }
+
+  	      if (!validateDisplayName(display_name)) {
+  	        return false;
+  	      }
+  	    } else if (options.require_display_name) {
+  	      return false;
+  	    }
+  	  }
+
+  	  if (!options.ignore_max_length && str.length > defaultMaxEmailLength) {
+  	    return false;
+  	  }
+
+  	  var parts = str.split('@');
+  	  var domain = parts.pop();
+  	  var lower_domain = domain.toLowerCase();
+
+  	  if (options.host_blacklist.includes(lower_domain)) {
+  	    return false;
+  	  }
+
+  	  if (options.host_whitelist.length > 0 && !options.host_whitelist.includes(lower_domain)) {
+  	    return false;
+  	  }
+
+  	  var user = parts.join('@');
+
+  	  if (options.domain_specific_validation && (lower_domain === 'gmail.com' || lower_domain === 'googlemail.com')) {
+  	    /*
+  	      Previously we removed dots for gmail addresses before validating.
+  	      This was removed because it allows `multiple..dots@gmail.com`
+  	      to be reported as valid, but it is not.
+  	      Gmail only normalizes single dots, removing them from here is pointless,
+  	      should be done in normalizeEmail
+  	    */
+  	    user = user.toLowerCase(); // Removing sub-address from username before gmail validation
+
+  	    var username = user.split('+')[0]; // Dots are not included in gmail length restriction
+
+  	    if (!(0, _isByteLength.default)(username.replace(/\./g, ''), {
+  	      min: 6,
+  	      max: 30
+  	    })) {
+  	      return false;
+  	    }
+
+  	    var _user_parts = username.split('.');
+
+  	    for (var i = 0; i < _user_parts.length; i++) {
+  	      if (!gmailUserPart.test(_user_parts[i])) {
+  	        return false;
+  	      }
+  	    }
+  	  }
+
+  	  if (options.ignore_max_length === false && (!(0, _isByteLength.default)(user, {
+  	    max: 64
+  	  }) || !(0, _isByteLength.default)(domain, {
+  	    max: 254
+  	  }))) {
+  	    return false;
+  	  }
+
+  	  if (!(0, _isFQDN.default)(domain, {
+  	    require_tld: options.require_tld,
+  	    ignore_max_length: options.ignore_max_length,
+  	    allow_underscores: options.allow_underscores
+  	  })) {
+  	    if (!options.allow_ip_domain) {
+  	      return false;
+  	    }
+
+  	    if (!(0, _isIP.default)(domain)) {
+  	      if (!domain.startsWith('[') || !domain.endsWith(']')) {
+  	        return false;
+  	      }
+
+  	      var noBracketdomain = domain.slice(1, -1);
+
+  	      if (noBracketdomain.length === 0 || !(0, _isIP.default)(noBracketdomain)) {
+  	        return false;
+  	      }
+  	    }
+  	  }
+
+  	  if (user[0] === '"') {
+  	    user = user.slice(1, user.length - 1);
+  	    return options.allow_utf8_local_part ? quotedEmailUserUtf8.test(user) : quotedEmailUser.test(user);
+  	  }
+
+  	  var pattern = options.allow_utf8_local_part ? emailUserUtf8Part : emailUserPart;
+  	  var user_parts = user.split('.');
+
+  	  for (var _i = 0; _i < user_parts.length; _i++) {
+  	    if (!pattern.test(user_parts[_i])) {
+  	      return false;
+  	    }
+  	  }
+
+  	  if (options.blacklisted_chars) {
+  	    if (user.search(new RegExp("[".concat(options.blacklisted_chars, "]+"), 'g')) !== -1) return false;
+  	  }
+
+  	  return true;
+  	}
+
+  	module.exports = exports.default;
+  	module.exports.default = exports.default; 
+  } (isEmail$1, isEmail$1.exports));
+
+  var isEmailExports = isEmail$1.exports;
+  var isEmail = /*@__PURE__*/getDefaultExportFromCjs(isEmailExports);
+
+  var email = {
+    html5Attributes: {
+      message: 'message',
+      multiple: 'multiple',
+      separator: 'separator'
+    },
+    enableByHtml5($field) {
+      return 'email' === $field.attr('type');
+    },
+    /**
+     * 当且仅当输入值是有效的电子邮件地址时返回true
+     *
+     * @param {BootstrapValidation} validation 验证插件实例
+     * @param {jQuery} $field Field element
+     * @param {Object} [options]
+     * - multiple: 允许多个电子邮件地址，用逗号或分号分隔；默认值为false。
+     * - separator: Regex用于一个或多个字符，这些字符应作为地址之间的分隔符；默认值为逗号/[，；]/，即逗号或分号。
+     * @returns {Boolean}
+     */
+    rule(validation, $field, options) {
+      let value = $field.val();
+      if (value === '') {
+        return true;
+      }
+      let allowMultiple = options.multiple === true || options.multiple === 'true';
+      if (allowMultiple) {
+        //如果是多个邮箱
+        let separator = options.separator || /[,;]/;
+        let addresses = this._splitEmailAddresses(value, separator);
+        for (let i = 0; i < addresses.length; i++) {
+          if (!isEmail(addresses[i])) {
+            return false;
+          }
+        }
+        return true;
+      } else {
+        return isEmail(value);
+      }
+    },
+    _splitEmailAddresses(emailAddresses, separator) {
+      let quotedFragments = emailAddresses.split(/"/),
+        quotedFragmentCount = quotedFragments.length,
+        emailAddressArray = [],
+        nextEmailAddress = '';
+      for (let i = 0; i < quotedFragmentCount; i++) {
+        if (i % 2 === 0) {
+          let splitEmailAddressFragments = quotedFragments[i].split(separator),
+            splitEmailAddressFragmentCount = splitEmailAddressFragments.length;
+          if (splitEmailAddressFragmentCount === 1) {
+            nextEmailAddress += splitEmailAddressFragments[0];
+          } else {
+            emailAddressArray.push(nextEmailAddress + splitEmailAddressFragments[0]);
+            for (let j = 1; j < splitEmailAddressFragmentCount - 1; j++) {
+              emailAddressArray.push(splitEmailAddressFragments[j]);
+            }
+            nextEmailAddress = splitEmailAddressFragments[splitEmailAddressFragmentCount - 1];
+          }
+        } else {
+          nextEmailAddress += '"' + quotedFragments[i];
+          if (i < quotedFragmentCount - 1) {
+            nextEmailAddress += '"';
+          }
+        }
+      }
+      emailAddressArray.push(nextEmailAddress);
+      return emailAddressArray;
+    }
+  };
+
+  var remote = {
+    html5Attributes: {
+      message: 'message',
+      name: 'name',
+      type: 'type',
+      url: 'url',
+      data: 'data',
+      delay: 'delay'
+    },
+    /**
+     * 销毁bootstrapValidattion时销毁计时器（使用validation.dedestroy（）方法）
+     */
+    destroy(validation, $field, options) {
+      if ($field.data('bv.remote.timer')) {
+        clearTimeout($field.data('bv.remote.timer'));
+        $field.removeData('bv.remote.timer');
+      }
+    },
+    /**
+     * 请求远程服务器检查输入值
+     *
+     * @param {BootstrapValidation} validation 插件实例
+     * @param {jQuery} $field 字段元素
+     * @param {Object} options 选项
+     * - url {String|Function}
+     * - type {String} [optional] 可以是GET或POST（默认）
+     * - data {Object|Function} [optional]: 默认情况下，它将采用值
+     *  {
+     *      <fieldName>: <fieldValue>
+     *  }
+     * - delay
+     * - name {String} [optional]: 覆盖请求的字段名称。
+     * - message: 无效消息
+     * - headers: 附加标头
+     * @returns {Deferred}
+     */
+    rule(validation, $field, options) {
+      let value = $field.val();
+      let dfd = new $.Deferred();
+      if (value === '') {
+        // 异步操作成功，调用 resolve()
+        dfd.resolve($field, 'remote', {
+          valid: true
+        });
+        return dfd;
+      }
+      let name = $field.attr('data-bv-field');
+      let data = options.data || {};
+      let url = options.url;
+      let type = options.type || 'GET';
+      let headers = options.headers || {};
+
+      // 支持动态数据
+      if ('function' === typeof data) {
+        data = data.call(this, validation);
+      }
+
+      // 从HTML5属性分析字符串数据
+      if ('string' === typeof data) {
+        data = JSON.parse(data);
+      }
+
+      // 支持动态url
+      if ('function' === typeof url) {
+        url = url.call(this, validation);
+      }
+      data[options.name || name] = value;
+      function runCallback() {
+        const xhr = $.ajax({
+          type: type,
+          headers: headers,
+          url: url,
+          dataType: 'json',
+          data: data
+        });
+        xhr.then(function (response) {
+          response.valid = response.valid === true || response.valid === 'true';
+
+          //异步操作成功，调用 resolve()
+          dfd.resolve($field, 'remote', response);
+        });
+        dfd.fail(function () {
+          xhr.abort();
+        });
+        return dfd;
+      }
+      if (options.delay) {
+        //由于表单可能有多个具有相同名称的字段
+        //我必须将计时器连接到字段元素
+        if ($field.data('bv.remote.timer')) {
+          clearTimeout($field.data('bv.remote.timer'));
+        }
+        $field.data('bv.remote.timer', setTimeout(runCallback, options.delay));
+        return dfd;
+      } else {
+        return runCallback();
+      }
+    }
+  };
+
+  var Rules = {
+    require,
+    email,
+    stringLength,
+    remote
+  };
+
+  var popoverAction = {
+    show: ($icon, content) => {
+      $icon.css('cursor', 'pointer').popover('destroy').popover({
+        container: 'body',
+        content,
+        html: true,
+        placement: 'auto top',
+        trigger: 'hover click'
+      });
+    },
+    hide: $icon => {
+      $icon.css('cursor', '').popover('destroy');
+    }
+  };
+
+  var tooltipAction = {
+    show: ($icon, title) => {
+      $icon.css('cursor', 'pointer').tooltip('destroy').tooltip({
+        container: 'body',
+        html: true,
+        placement: 'auto top',
+        title
+      });
+    },
+    hide: $icon => {
+      $icon.css('cursor', '').tooltip('destroy');
+    }
+  };
+
+  var _$form = /*#__PURE__*/new WeakMap();
+  var _options = /*#__PURE__*/new WeakMap();
+  var _$invalidFields = /*#__PURE__*/new WeakMap();
+  var _$submitButton = /*#__PURE__*/new WeakMap();
+  var _$hiddenButton = /*#__PURE__*/new WeakMap();
   var _changeEvent = /*#__PURE__*/new WeakMap();
   var _submitIfValid = /*#__PURE__*/new WeakMap();
   var _cacheFields = /*#__PURE__*/new WeakMap();
-  var _options = /*#__PURE__*/new WeakMap();
-  var _$formEl = /*#__PURE__*/new WeakMap();
-  var _invalidFields = /*#__PURE__*/new WeakMap();
-  var _$submitButton = /*#__PURE__*/new WeakMap();
-  var _$hiddenButton = /*#__PURE__*/new WeakMap();
   var _init = /*#__PURE__*/new WeakSet();
+  var _initField = /*#__PURE__*/new WeakSet();
+  var _submit = /*#__PURE__*/new WeakSet();
+  var _onSuccess = /*#__PURE__*/new WeakSet();
+  var _onError = /*#__PURE__*/new WeakSet();
+  var _getFields = /*#__PURE__*/new WeakSet();
+  var _isExistField = /*#__PURE__*/new WeakSet();
+  var _onFieldValidated = /*#__PURE__*/new WeakSet();
+  var _isExcluded = /*#__PURE__*/new WeakSet();
+  var _isOptionEnabled = /*#__PURE__*/new WeakSet();
+  var _exceedThreshold = /*#__PURE__*/new WeakSet();
+  var _getMessage = /*#__PURE__*/new WeakSet();
+  var _getMessageContainer = /*#__PURE__*/new WeakSet();
+  var _parseOptions = /*#__PURE__*/new WeakSet();
+  var _getOptionsfromHtml = /*#__PURE__*/new WeakSet();
+  var _getCommonDataOptions = /*#__PURE__*/new WeakSet();
+  var _getDynamicOption = /*#__PURE__*/new WeakSet();
   class BootstrapValidation {
-    constructor(el, options) {
-      // 初始化
+    constructor(el, _options2) {
+      /**
+      * 一些验证规则可以选择其值是动态的。
+      * 例如，zipCode验证器具有国家选项，该选项可能会由select元素动态更改。
+      *
+      * @param {jQuery|String} field 字段名称或元素
+      * @param {String|Function} option 可通过以下方式确定的选项:
+      * - 字符串
+      * - 定义值的字段的名称
+      * - 返回值的函数的名称
+      * - 函数返回值
+      *
+      * 回调函数的格式为
+      *      callback: function(value, validation, $field) {
+      *          // value 是字段的值
+      *          // validation  是BootstrapValidation 实例
+      *          // $field 是字段元素
+      *      }
+      *
+      * @returns {String}
+      */
+      _classPrivateMethodInitSpec(this, _getDynamicOption);
+      /**
+       * 获取表单和字段元素都可以设置的选项
+       * @param {JQuery} $type 表单元素/字段元素
+       * @returns
+       */
+      _classPrivateMethodInitSpec(this, _getCommonDataOptions);
+      /**
+       * 从html属性上获取属性
+       * @returns {Object} 选项
+       */
+      _classPrivateMethodInitSpec(this, _getOptionsfromHtml);
+      /**
+       * 从HTML属性分析验证器选项
+       * @param {JQuery} $field 字段元素
+       */
+      _classPrivateMethodInitSpec(this, _parseOptions);
+      /**
+       * 获取用于放置错误消息的元素
+       * @param {jQuery} $field  字段元素
+       * @param {String} group  字段元素容器选择器
+       */
+      _classPrivateMethodInitSpec(this, _getMessageContainer);
+      /**
+       * 获取给定字段和验证器的错误消息
+       *
+       * @param {String} field 字段名称
+       * @param {String} ruleName 规则名称
+       * @returns {String}
+       */
+      _classPrivateMethodInitSpec(this, _getMessage);
+      /**
+       * 检查字段值的字符数是否超过阈值
+       *
+       * @param {jQuery} $field 字段元素
+       * @returns {Boolean}
+       */
+      _classPrivateMethodInitSpec(this, _exceedThreshold);
+      /**
+       * 检查字段选项是否已启用
+       *
+       * @param {String} field 字段名称
+       * @param {String} option 选项名称, 例如:"verbose", "autoFocus"
+       * @returns {Boolean}
+       */
+      _classPrivateMethodInitSpec(this, _isOptionEnabled);
+      /**
+       * 检查该字段是否已排除。
+       * 返回true表示该字段将不被验证
+       *
+       * @param {jQuery} $field 字段元素
+       * @returns {Boolean}
+       */
+      _classPrivateMethodInitSpec(this, _isExcluded);
+      /**
+       * 在验证字段元素后调用
+       *
+       * @param {jQuery} $field 字段元素
+       * @param {String} [ruleName] 规则名
+       */
+      _classPrivateMethodInitSpec(this, _onFieldValidated);
+      /**
+       * 检查字段是否存在
+       * @param {JQuery} fields
+       * @param {String} matchedField
+       * @returns {Boolean}
+       */
+      _classPrivateMethodInitSpec(this, _isExistField);
+      /**
+       * 获取字段匹配结果 {fields,matchedField}  fields:是一个字段元素的jQuery集合 matchedField:字段名称
+       * @param {String|jQuery} field  字段名称或字段元素
+       * @returns {Object}
+       */
+      _classPrivateMethodInitSpec(this, _getFields);
+      /**
+       * success.form.bv事件的默认处理程序。
+       * 当所有字段都有效时，将调用它
+       *
+       * @param {Object} e jQuery事件对象
+       */
+      _classPrivateMethodInitSpec(this, _onError);
+      /**
+       * success.form.bv事件的默认处理程序。
+       * 当所有字段都有效时，将调用它
+       *
+       * @param {Object} e jQuery事件对象
+       */
+      _classPrivateMethodInitSpec(this, _onSuccess);
+      /**
+      * Called when all validations are completed
+      */
+      _classPrivateMethodInitSpec(this, _submit);
+      /**
+       * 初始化字段
+       * @param {String|jQuery} field  字段名称或字段元素
+       */
+      _classPrivateMethodInitSpec(this, _initField);
+      //初始化方法
       _classPrivateMethodInitSpec(this, _init);
-      // 确定用户更改字段值时激发的事件
-      _classPrivateFieldInitSpec(this, _changeEvent, {
+      //表单jQ对象
+      _classPrivateFieldInitSpec(this, _$form, {
         writable: true,
-        value: 'input'
-      });
-      // 当远程/回调验证器返回时，指示表单已准备好提交的标志
-      _classPrivateFieldInitSpec(this, _submitIfValid, {
-        writable: true,
-        value: null
-      });
-      // 缓存的字段元素
-      _classPrivateFieldInitSpec(this, _cacheFields, {
-        writable: true,
-        value: {}
+        value: void 0
       });
       //选项
       _classPrivateFieldInitSpec(this, _options, {
         writable: true,
-        value: {}
-      });
-      //表单
-      _classPrivateFieldInitSpec(this, _$formEl, {
-        writable: true,
-        value: null
+        value: void 0
       });
       // 无效字段数组
-      _classPrivateFieldInitSpec(this, _invalidFields, {
+      _classPrivateFieldInitSpec(this, _$invalidFields, {
         writable: true,
-        value: $$5([])
+        value: $$6([])
       });
-      //提交按钮
+      //单击以提交表单的提交按钮
       _classPrivateFieldInitSpec(this, _$submitButton, {
         writable: true,
-        value: null
+        value: void 0
       });
-      // 隐藏按钮
+      //隐藏的按钮
       _classPrivateFieldInitSpec(this, _$hiddenButton, {
         writable: true,
-        value: null
+        value: void 0
       });
-      _classPrivateFieldSet(this, _options, options);
-      _classPrivateFieldSet(this, _$formEl, $$5(el));
+      //验证状态(已经封装到常量里)
+      //事件
+      _classPrivateFieldInitSpec(this, _changeEvent, {
+        writable: true,
+        value: 'input'
+      });
+      //当远程/回调验证器返回时，指示表单已准备好提交的标志
+      _classPrivateFieldInitSpec(this, _submitIfValid, {
+        writable: true,
+        value: void 0
+      });
+      //缓存字段
+      _classPrivateFieldInitSpec(this, _cacheFields, {
+        writable: true,
+        value: {}
+      });
+      //这里的options是已经合并过默认选项的
+      _classPrivateFieldSet(this, _options, _options2);
+      _classPrivateFieldSet(this, _$form, $$6(el));
 
-      //调用初始化方法
+      //初始化
       _classPrivateMethodGet(this, _init, _init2).call(this);
+    }
+    /**
+     * 验证表单
+     *
+     * @returns {BootstrapValidation}
+     */
+    validate() {
+      if (!_classPrivateFieldGet(this, _options).fields) {
+        return this;
+      }
+      this.disableSubmitButtons(true);
+      _classPrivateFieldSet(this, _submitIfValid, false);
+      for (let field in _classPrivateFieldGet(this, _options).fields) {
+        this.validateField(field);
+      }
+      _classPrivateMethodGet(this, _submit, _submit2).call(this);
+      _classPrivateFieldSet(this, _submitIfValid, true);
+      return this;
+    }
+
+    /**
+     * 验证字段
+     *
+     * @param {String|jQuery} field 字段名称或者字段元素
+     * @returns {BootstrapValidation}
+     */
+    validateField(field) {
+      let {
+        fields,
+        matchedField
+      } = _classPrivateMethodGet(this, _getFields, _getFields2).call(this, field);
+      field = matchedField;
+      if (!_classPrivateMethodGet(this, _isExistField, _isExistField2).call(this, fields, matchedField)) {
+        return this;
+      }
+      let that = this;
+      let type = fields.attr('type');
+      let total = 'radio' === type || 'checkbox' === type ? 1 : fields.length;
+      let updateAll = 'radio' === type || 'checkbox' === type;
+      let rules = _classPrivateFieldGet(this, _options).fields[field].rules;
+      let verbose = _classPrivateMethodGet(this, _isOptionEnabled, _isOptionEnabled2).call(this, field, 'verbose');
+      for (let i = 0; i < total; i++) {
+        let $field = fields.eq(i);
+        if (_classPrivateMethodGet(this, _isExcluded, _isExcluded2).call(this, $field)) {
+          //如果是排除的字段则跳过当前循环
+          continue;
+        }
+        let stop = false;
+        for (let ruleName in rules) {
+          if ($field.data('bv.dfs.' + ruleName)) {
+            $field.data('bv.dfs.' + ruleName).reject();
+          }
+          if (stop) {
+            break;
+          }
+
+          //如果已验证字段，则不验证该字段
+          let result = $field.data('bv.result.' + ruleName);
+          if (result === Constants.STATUS_VALID || result === Constants.STATUS_INVALID) {
+            //如果是通过，或是无效
+            _classPrivateMethodGet(this, _onFieldValidated, _onFieldValidated2).call(this, $field, ruleName);
+            continue;
+          } else if (rules[ruleName].enabled === false) {
+            this.updateStatus(updateAll ? field : $field, Constants.STATUS_VALID, ruleName);
+            continue;
+          }
+
+          //保存验证的结果
+          $field.data('bv.result.' + ruleName, Constants.STATUS_VALIDATING);
+          //调用内置的验证规则并返回结果
+          let validateResult = $$6.fn[Constants.NAME].rules[ruleName].rule(this, $field, rules[ruleName]);
+          console.log(validateResult);
+
+          //如果返回的结果布尔类型
+          if ('boolean' === typeof validateResult) {
+            $field.data('bv.response.' + ruleName, validateResult);
+
+            //如果是单选框和复选框
+            const updateField = updateAll ? field : $field;
+            //验证结果为真则验证状态设置为通过。
+            const status = validateResult ? Constants.STATUS_VALID : Constants.STATUS_INVALID;
+
+            //跟新状态
+            this.updateStatus(updateField, status, ruleName);
+
+            //如果没通过，verbose===false的时候就直接终止循环，只显示一条错误关系
+            if (!validateResult && !verbose) {
+              break;
+            }
+          }
+          // 如果是一个对象 { valid: true/false, message: 'dynamic message' }
+          else if (Utils.isObj(validateResult) && Utils.checkProps(validateResult, ['valid', 'message'])) {
+            $field.data('bv.response.' + ruleName, validateResult);
+
+            //更新错误信息
+            this.updateMessage(updateAll ? field : $field, ruleName, validateResult.message);
+
+            //更新状态
+            this.updateStatus(updateAll ? field : $field, validateResult.valid ? Constants.STATUS_VALID : Constants.STATUS_INVALID, ruleName);
+            if (!validateResult.valid && !verbose) {
+              break;
+            }
+          } else if (Utils.isObj(validateResult) && validateResult.resolve) {
+            //如果是dfd对象
+
+            //更新状态
+            this.updateStatus(updateAll ? field : $field, Constants.STATUS_VALIDATING, ruleName);
+            // 字段上存返回结果
+            $field.data('bv.dfs.' + ruleName, validateResult);
+
+            //注册回调函数
+            validateResult.done(function ($field, ruleName, response) {
+              $field.removeData('bv.dfs.' + ruleName).data('bv.response.' + ruleName, response);
+              if (response.message) {
+                that.updateMessage($field, ruleName, response.message);
+              }
+              that.updateStatus(updateAll ? $field.attr('data-bv-field') : $field, response.valid ? Constants.STATUS_VALID : Constants.STATUS_INVALID, ruleName);
+              if (response.valid && _classPrivateFieldGet(that, _submitIfValid) === true) {
+                // 如果远程验证器返回true并且表单已准备好提交，则执行此操作
+                _classPrivateMethodGet(that, _submit, _submit2).call(that);
+              } else if (!response.valid && !verbose) {
+                stop = true;
+              }
+            });
+          }
+        }
+      }
+    }
+    /**
+    * 更新错误信息
+    *
+    * @param {String|jQuery} field 字段名称或字段元素
+    * @param {String} rule 验证规则名称
+    * @param {String} message 信息
+    * @returns {BootstrapValidation}
+    */
+    updateMessage(field, rule, message) {
+      let {
+        fields,
+        matchedField
+      } = _classPrivateMethodGet(this, _getFields, _getFields2).call(this, field);
+      fields.each(function () {
+        $$6(this).data('bv.messages').find('.help-block[data-bv-rule="' + rule + '"][data-bv-for="' + matchedField + '"]').html(message);
+      });
+    }
+
+    /**
+     * 更新字段的所有验证结果
+     *
+     * @param {String|jQuery} field 字段名称或字段元素
+     * @param {String} status 状态  可用值 'NOT_VALIDATED', 'VALIDATING', 'INVALID' , 'VALID'
+     * @param {String} [ruleName] 验证器名称。如果为null，该方法将更新所有验证器的有效性结果
+     * @returns {BootstrapValidation}
+     */
+    updateStatus(field, status, ruleName) {
+      let {
+        fields,
+        matchedField
+      } = _classPrivateMethodGet(this, _getFields, _getFields2).call(this, field);
+      field = matchedField;
+      if (status === Constants.STATUS_NOT_VALIDATED) {
+        // 重置标志
+        // 当延迟验证器在键入时返回true时，防止表单进行提交
+        _classPrivateFieldSet(this, _submitIfValid, false);
+      }
+      let type = fields.attr('type');
+      let group = _classPrivateFieldGet(this, _options).fields[field].group || _classPrivateFieldGet(this, _options).group;
+      let total = 'radio' === type || 'checkbox' === type ? 1 : fields.length;
+      for (let i = 0; i < total; i++) {
+        let $field = fields.eq(i);
+        if (_classPrivateMethodGet(this, _isExcluded, _isExcluded2).call(this, $field)) {
+          continue;
+        }
+        let $parent = $field.parents(group);
+        let $message = $field.data('bv.messages');
+        let $allErrors = $message.find('.help-block[data-bv-rule][data-bv-for="' + field + '"]');
+        let $errors = ruleName ? $allErrors.filter('[data-bv-rule="' + ruleName + '"]') : $allErrors;
+        let $icon = $field.data('bv.icon');
+        let condition1 = 'function' === typeof (_classPrivateFieldGet(this, _options).fields[field].container || _classPrivateFieldGet(this, _options).container);
+        let container = condition1 ? (_classPrivateFieldGet(this, _options).fields[field].container || _classPrivateFieldGet(this, _options).container).call(this, $field, this) : _classPrivateFieldGet(this, _options).fields[field].container || _classPrivateFieldGet(this, _options).container;
+        let isValidField = null;
+
+        // 更新状态
+        if (ruleName) {
+          $field.data('bv.result.' + ruleName, status);
+        } else {
+          for (let ruleName in _classPrivateFieldGet(this, _options).fields[field].rules) {
+            $field.data('bv.result.' + ruleName, status);
+          }
+        }
+
+        // 显示隐藏 错误元素和反馈图标
+        $errors.attr('data-bv-result', status);
+
+        //确定包含元素的选项卡
+        let $tabPane = $field.parents('.tab-pane');
+        let tabId;
+        let $tab;
+        if ($tabPane && (tabId = $tabPane.attr('id'))) {
+          $tab = $$6('a[href="#' + tabId + '"][data-toggle="tab"]').parent();
+        }
+        const statusActions = {
+          [Constants.STATUS_VALIDATING]: () => {
+            //验证中
+
+            isValidField = null;
+            //禁用提交按钮
+            this.disableSubmitButtons(true);
+            //移除成功状态添加错误状态
+            $parent.removeClass('has-success').removeClass('has-error');
+            if ($icon) {
+              //有图标
+
+              $icon.removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.valid).removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.invalid).addClass(_classPrivateFieldGet(this, _options).feedbackIcons.validating).show();
+            }
+            if ($tab) {
+              $tab.removeClass('bv-tab-success').removeClass('bv-tab-error');
+            }
+          },
+          [Constants.STATUS_INVALID]: () => {
+            //无效
+
+            isValidField = false;
+            this.disableSubmitButtons(true);
+            $parent.removeClass('has-success').addClass('has-error');
+            if ($icon) {
+              $icon.removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.valid).removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.validating).addClass(_classPrivateFieldGet(this, _options).feedbackIcons.invalid).show();
+            }
+            if ($tab) {
+              $tab.removeClass('bv-tab-success').addClass('bv-tab-error');
+            }
+          },
+          [Constants.STATUS_VALID]: () => {
+            //通过
+
+            let not_validated = $allErrors.filter('[data-bv-result="' + Constants.STATUS_NOT_VALIDATED + '"]').length === 0;
+            //所有验证器已完成
+            let all_completed = $allErrors.filter('[data-bv-result="' + Constants.STATUS_VALID + '"]').length === $allErrors.length;
+            isValidField = not_validated ? all_completed : null;
+            if (isValidField !== null) {
+              this.disableSubmitButtons(_classPrivateFieldGet(this, _$submitButton) ? !this.isValid() : !isValidField);
+              if ($icon) {
+                $icon.removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.invalid).removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.validating).removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.valid).addClass(isValidField ? _classPrivateFieldGet(this, _options).feedbackIcons.valid : _classPrivateFieldGet(this, _options).feedbackIcons.invalid).show();
+              }
+            }
+            $parent.removeClass('has-error has-success').addClass(this.isValidContainer($parent) ? 'has-success' : 'has-error');
+            if ($tab) {
+              $tab.removeClass('bv-tab-success').removeClass('bv-tab-error').addClass(this.isValidContainer($tabPane) ? 'bv-tab-success' : 'bv-tab-error');
+            }
+          },
+          [Constants.STATUS_NOT_VALIDATED]: () => {
+            //未验证
+            isValidField = null;
+            this.disableSubmitButtons(false);
+            $parent.removeClass('has-success').removeClass('has-error');
+            if ($icon) {
+              $icon.removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.valid).removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.invalid).removeClass(_classPrivateFieldGet(this, _options).feedbackIcons.validating).hide();
+            }
+            if ($tab) {
+              $tab.removeClass('bv-tab-success').removeClass('bv-tab-error');
+            }
+          },
+          default: () => {
+            // 默认情况的处理逻辑
+            statusActions[Constants.STATUS_NOT_VALIDATED]();
+          }
+        }
+
+        // console.log(statusActions[status]);
+        ;
+        (statusActions[status] || statusActions.default)();
+
+        // 判断图标且容器类型
+        if ($icon && 'tooltip' === container) {
+          const title = $allErrors.filter("[data-bv-result=\"".concat(Constants.STATUS_INVALID, "\"]")).eq(0).html();
+          isValidField === false ? tooltipAction.show($icon, title) : tooltipAction.hide($icon);
+        } else if ($icon && 'popover' === container) {
+          const content = $allErrors.filter("[data-bv-result=\"".concat(Constants.STATUS_INVALID, "\"]")).eq(0).html();
+          isValidField === false ? popoverAction.show($icon, content) : popoverAction.hide($icon);
+        } else {
+          status === Constants.STATUS_INVALID ? $errors.show() : $errors.hide();
+        }
+
+        // 触发事件
+        $field.trigger($$6.Event(_classPrivateFieldGet(this, _options).events.fieldStatus), {
+          bv: this,
+          field: field,
+          element: $field,
+          status: status
+        });
+
+        // 验证字段后调用。
+        _classPrivateMethodGet(this, _onFieldValidated, _onFieldValidated2).call(this, $field, ruleName);
+      }
+      return this;
+    }
+
+    /**
+     * 检查表单有效性
+     *
+     * @returns {Boolean}
+     */
+    isValid() {
+      for (let field in _classPrivateFieldGet(this, _options).fields) {
+        if (!this.isValidField(field)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    /**
+     * 检查字段是否有效
+     *
+     * @param {String|jQuery} field 字段名称或字段元素
+     * @returns {Boolean}
+     */
+    isValidField(field) {
+      let {
+        fields,
+        matchedField
+      } = _classPrivateMethodGet(this, _getFields, _getFields2).call(this, field);
+      if (!_classPrivateMethodGet(this, _isExistField, _isExistField2).call(this, fields, matchedField)) {
+        return true;
+      }
+      let type = fields.attr('type');
+      let total = 'radio' === type || 'checkbox' === type ? 1 : fields.length;
+      for (let i = 0; i < total; i++) {
+        let $field = fields.eq(i);
+        if (_classPrivateMethodGet(this, _isExcluded, _isExcluded2).call(this, $field)) {
+          continue;
+        }
+        for (let ruleName in _classPrivateFieldGet(this, _options).fields[field].rules) {
+          if (_classPrivateFieldGet(this, _options).fields[field].rules[ruleName].enabled === false) {
+            continue;
+          }
+          let status = $field.data('bv.result.' + ruleName);
+          if (status !== Constants.STATUS_VALID) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+    /**
+     * 检查给定容器内的所有字段是否有效.
+     * 当使用诸如选项卡、折叠之类的向导时，它很有用
+     *
+     * @param {String|jQuery} container 容器选择器或元素
+     * @returns {Boolean}
+     */
+    isValidContainer(container) {
+      let that = this;
+      let map = {};
+      let $container = 'string' === typeof container ? $$6(container) : container;
+      if ($container.length === 0) {
+        return true;
+      }
+      $container.find('[data-bv-field]').each(function () {
+        let $field = $$6(this);
+        let field = $field.attr('data-bv-field');
+        if (!_classPrivateMethodGet(that, _isExcluded, _isExcluded2).call(that, $field) && !map[field]) {
+          map[field] = $field;
+        }
+      });
+      for (let field in map) {
+        let $f = map[field];
+        if ($f.data('bv.messages').find('.help-block[data-bv-rule][data-bv-for="' + field + '"]').filter('[data-bv-result="' + Constants.STATUS_INVALID + '"]').length > 0) {
+          return false;
+        }
+      }
+      return true;
+    }
+    /**
+     * 禁用或启用提交按钮
+     *
+     * @param {Boolean} disabled ture  false
+     * @returns {BootstrapValidation}
+     */
+    disableSubmitButtons(disabled) {
+      if (!disabled) {
+        _classPrivateFieldGet(this, _$form).find(_classPrivateFieldGet(this, _options).submitButtons).removeAttr('disabled');
+      } else if (_classPrivateFieldGet(this, _options).live !== 'disabled') {
+        // 如果禁用了实时验证模式，则不要禁用
+        _classPrivateFieldGet(this, _$form).find(_classPrivateFieldGet(this, _options).submitButtons).attr('disabled', 'disabled');
+      }
+      return this;
+    }
+    /**
+     * 获取字段选项
+     *
+     * @param {String|jQuery} [field] 字段名称或字段元素。如果未设置，该方法将返回表单选项
+     * @param {String} [validator] 规则的名称。如果为null，则该方法返回表单选项
+     * @param {String} [option] 选项名称
+     * @return {String|Object}
+     */
+    getOptions(field, rule, option) {
+      if (!field) {
+        return option ? _classPrivateFieldGet(this, _options)[option] : _classPrivateFieldGet(this, _options);
+      }
+      if ('object' === typeof field) {
+        field = field.attr('data-bv-field');
+      }
+      if (!_classPrivateFieldGet(this, _options).fields[field]) {
+        return null;
+      }
+      let options = _classPrivateFieldGet(this, _options).fields[field];
+      if (!rule) {
+        return option ? options[option] : options;
+      }
+      if (!options.rules || !options.rules[rule]) {
+        return null;
+      }
+      return option ? options.rules[rule][option] : options.rules[rule];
+    }
+    /**
+     * 按给定名称检索字段元素
+     * @param {String} field 字段名
+     * @returns
+     */
+    getFieldElements(field) {
+      if (!_classPrivateFieldGet(this, _cacheFields)[field]) {
+        _classPrivateFieldGet(this, _cacheFields)[field] = _classPrivateFieldGet(this, _options).fields[field] && _classPrivateFieldGet(this, _options).fields[field].selector ? $$6(_classPrivateFieldGet(this, _options).fields[field].selector) : _classPrivateFieldGet(this, _$form).find('[name="' + field + '"]');
+      }
+      return _classPrivateFieldGet(this, _cacheFields)[field];
     }
   }
 
@@ -2919,21 +4306,833 @@
    * ====================================================
    */
   function _init2() {
-    console.log('ww');
+    //保存this
+    const that = this;
+
+    //从html属性上取一次参数
+    let options = {
+      ..._classPrivateMethodGet(that, _getOptionsfromHtml, _getOptionsfromHtml2).call(that),
+      fields: {}
+    };
+    // console.log(options);
+
+    _classPrivateFieldGet(that, _$form) // 禁用HTML 5中的客户端验证
+    .attr('novalidate', 'novalidate')
+    //添加一个class
+    .addClass(_classPrivateFieldGet(this, _options).elementClass)
+    // 首先禁用默认提交
+    .on('submit.bv', function (e) {
+      e.preventDefault();
+
+      //验证方法，先注释
+      that.validate();
+    }).on('click.bv', _classPrivateFieldGet(this, _options).submitButtons, function () {
+      //保存提交按钮的JQ对象
+      _classPrivateFieldSet(that, _$submitButton, $$6(this));
+      // 用户只需点击提交按钮
+      _classPrivateFieldSet(that, _submitIfValid, true);
+    })
+    // 查找所有具有“name”或“data bv field”属性的字段
+    .find('[name], [data-bv-field]').each(function () {
+      //得到该字段元素的jQuery对象。
+      let $field = $$6(this);
+
+      //从新获取字段
+      let field = $field.attr('name') || $field.attr('data-bv-field');
+      // console.log($field,field);
+
+      let opts = _classPrivateMethodGet(that, _parseOptions, _parseOptions2).call(that, $field);
+      if (opts) {
+        $field.attr('data-bv-field', field);
+        options.fields[field] = $$6.extend({}, opts, options.fields[field]);
+      }
+    });
+
+    //合并最大的选项
+    _classPrivateFieldSet(this, _options, $$6.extend(true, _classPrivateFieldGet(this, _options), options));
+    // console.log(this.#options);
+
+    //当在表单中的任何字段上按Enter键时，第一个提交按钮将完成其工作。
+    //然后将提交表格。
+    //我创建了第一个隐藏的提交按钮
+    _classPrivateFieldSet(this, _$hiddenButton, $$6('<button/>').attr('type', 'submit').prependTo(_classPrivateFieldGet(this, _$form)).addClass('bv-hidden-submit').css({
+      display: 'none',
+      width: 0,
+      height: 0
+    }));
+    _classPrivateFieldGet(this, _$form).on('click.bv', '[type="submit"]', function (e) {
+      //e.isDefaultPrevented() 用来判断 用于检测事件是否已经调用 event.preventDefault() 阻止了默认行为。如果事件调用了 event.preventDefault() 方法，则 e.isDefaultPrevented() 返回 true，否则返回 false
+      // e.isDefaultPrevented() 可以用来判断是否执行了默认行为的阻止操作
+      // 检查按钮单击处理程序是否返回false
+      if (!e.isDefaultPrevented()) {
+        //没有阻止默认事件，因为如果用户自己阻止了默认提交事件，我们这里就不能强制让它手动提交了。
+
+        const $target = $$6(e.target);
+        // 按钮可能包含HTML标记
+        const $button = $target.is('[type="submit"]') ? $target.eq(0) : $target.parent('[type="submit"]').eq(0);
+
+        // 单击提交按钮/输入时不执行验证
+        // 不是由“submitButtons”选项定义的
+        if (_classPrivateFieldGet(that, _options).submitButtons && !$button.is(_classPrivateFieldGet(that, _options).submitButtons) && !$button.is(_classPrivateFieldGet(that, _$hiddenButton))) {
+          _classPrivateFieldGet(that, _$form).off('submit.bv').submit();
+        }
+      }
+    });
+
+    //循环初始化每个字段
+    for (let field in _classPrivateFieldGet(this, _options).fields) {
+      // console.log(field);
+      _classPrivateMethodGet(this, _initField, _initField2).call(this, field);
+    }
+
+    //插件初始化表单后触发
+    _classPrivateFieldGet(this, _$form).trigger($$6.Event(_classPrivateFieldGet(this, _options).events.formInit), {
+      bv: this,
+      options: _classPrivateFieldGet(this, _options)
+    });
+
+    // 准备事件
+    if (_classPrivateFieldGet(this, _options).onSuccess) {
+      _classPrivateFieldGet(this, _$form).on(_classPrivateFieldGet(this, _options).events.formSuccess, function (e) {
+        Utils.call(_classPrivateFieldGet(that, _options).onSuccess, [e]);
+      });
+    }
+    if (_classPrivateFieldGet(this, _options).onError) {
+      _classPrivateFieldGet(this, _$form).on(_classPrivateFieldGet(this, _options).events.formError, function (e) {
+        Utils.call(_classPrivateFieldGet(that, _options).onError, [e]);
+      });
+    }
   }
-  // 单击以提交表单的提交按钮
+  function _initField2(field) {
+    //保存this
+    let that = this;
+    let {
+      fields,
+      matchedField
+    } = _classPrivateMethodGet(this, _getFields, _getFields2).call(this, field);
+    field = matchedField;
+
+    // 这里有的字段提供的可能是这种有多个选择的单选框
+    //   fields: {
+    //     'hobby[]': {
+    //         message: '这是无效的。',
+    //         rules: {
+    //             notEmpty: {
+    //                 message: '必须选择一个，这里会覆盖上面的message的默认值。'
+    //             },
+    //         }
+    //     }
+    // }
+    //  因为html可能是这样的。 注意 ：name="hobby[]"
+    //     <div class="form-group">
+    //     <label class="col-lg-3 control-label">爱好</label>
+    //     <div class="col-lg-5">
+    //         <div class="radio">
+    //             <label>
+    //                 <input type="radio" name="hobby[]" id="hobby1" value="option1">
+    //                 跑步
+    //             </label>
+    //         </div>
+    //         <div class="radio">
+    //             <label>
+    //                 <input type="radio" name="hobby[]" id="hobby2" value="option2">
+    //                 篮球
+    //             </label>
+    //         </div>
+    //         <div class="radio disabled">
+    //             <label>
+    //                 <input type="radio" name="hobby[]" id="hobby3" value="option3" disabled>
+    //                 乒乓球
+    //             </label>
+    //         </div>
+    //     </div>
+    // </div>
+
+    // 因此fields里面可能会包含多个type 为 radio 的 input的jQuery对象为下面的代码做铺垫。
+
+    //我们不需要验证不存在的字段
+    if (fields.length === 0 || _classPrivateFieldGet(this, _options).fields[field] === null || _classPrivateFieldGet(this, _options).fields[field].rules === null) {
+      return false;
+    }
+
+    /**
+     * 过滤选项上传递的一些不存在的验证规则
+     * fields:{
+     *  username:{
+     *    rules:{
+     *      notEmpty:{},
+     *      notEmptyqqxx:{},//这种rule在 bootstrapValidation 内置的rules中 肯定是不存在的，需要把它过滤掉，避免无意义的循环
+     *    }
+     *  }
+     * }
+     */
+    Object.keys(_classPrivateFieldGet(this, _options).fields[field].rules).forEach(ruleName => {
+      if (!$$6.fn[Constants.NAME].rules[ruleName]) {
+        delete _classPrivateFieldGet(this, _options).fields[field].rules[ruleName];
+      }
+    });
+
+    //是否启用字段的验证，没有设置默认给设置称true，true:表示开启。
+    if (_classPrivateFieldGet(this, _options).fields[field].enabled === null) {
+      _classPrivateFieldGet(this, _options).fields[field].enabled = true;
+    }
+
+    //字段元素jQ集合的长度，上面已经解释过了。它不会总是等于1
+    let total = fields.length;
+
+    // console.log(total);
+
+    //获取类型
+    let type = fields.attr('type');
+    // console.log(type,field);
+
+    //该判断是为了区分多个元素是否具有同样的name
+    // <div class="form-group">
+    //   <label class="col-lg-3 control-label">Editors</label>
+    //   <div class="col-lg-5">
+    //       <input class="form-control" type="text" name="editors[]" />
+    //   </div>
+    //   </div>
+    //   <div class="form-group">
+    //       <div class="col-lg-offset-3 col-lg-5">
+    //           <input class="form-control" type="text" name="editors[]" />
+    //       </div>
+    //   </div>
+    //   <div class="form-group">
+    //       <div class="col-lg-offset-3 col-lg-5">
+    //           <input class="form-control" type="text" name="editors[]" />
+    //       </div>
+    //   </div>
+    //   <div class="form-group">
+    //       <div class="col-lg-offset-3 col-lg-5">
+    //           <input class="form-control" type="text" name="editors[]" />
+    //       </div>
+    //   </div>
+    // 像上面这种结果该判断就会变成false
+    let updateAll = total === 1 || 'radio' === type || 'checkbox' === type;
+    // console.log(updateAll,field);
+
+    // 事件类型判断，如果是字段元素是 radio checkbox file SELECT 则用change事件，否则就调用 this.#changeEvent
+    let event = 'radio' === type || 'checkbox' === type || 'file' === type || 'SELECT' === fields.eq(0).get(0).tagName ? 'change' : _classPrivateFieldGet(this, _changeEvent);
+    //获取字段触发验证的事件，并生成数组 ['focus','blur']
+    let trigger = (_classPrivateFieldGet(this, _options).fields[field].trigger || _classPrivateFieldGet(this, _options).trigger || event).split(' ');
+    // console.log(trigger)
+    // 得到带有命名空间的事件 'focus.update.bv blur.update.bv',注意:这种格式的事件在jquery上也是可以触发的。
+    let events = trigger.map(item => {
+      return item + '.update.bv';
+    }).join(' ');
+    for (let i = 0; i < total; i++) {
+      //当前字段元素
+      let $field = fields.eq(i);
+
+      // 字段元素容器选择器,先从字段选项上的group开始取，如果没有则在大选项中取
+      let group = _classPrivateFieldGet(this, _options).fields[field].group || _classPrivateFieldGet(this, _options).group;
+
+      //然后通过group参数取到jQuery对象
+      let $parent = $field.parents(group);
+
+      // 字段错误消息的容器,如果传递的选项是一个函数，则使用call方式调用。
+      let container = 'function' === typeof (_classPrivateFieldGet(this, _options).fields[field].container || _classPrivateFieldGet(this, _options).container) ? (_classPrivateFieldGet(this, _options).fields[field].container || _classPrivateFieldGet(this, _options).container).call(this, $field, this) : _classPrivateFieldGet(this, _options).fields[field].container || _classPrivateFieldGet(this, _options).container;
+      // 得到错误消息容器jQuery对象,如果container设置了且不等于tooltip和popover 那么就通过jQuery选择器查找元素,否则调用getMessageContainer()自动查找
+      let $message = container && container !== 'tooltip' && container !== 'popover' ? $$6(container) : _classPrivateMethodGet(this, _getMessageContainer, _getMessageContainer2).call(this, $field, group);
+
+      //如果container为真，且不等于tooltip或者popover则给错误容器添加一个.has-error
+      //#https://getbootstrap.com/docs/3.4/css/#forms-control-validation
+      if (container && container !== 'tooltip' && container !== 'popover') {
+        $message.addClass('has-error');
+      }
+
+      //删除所有错误消息和反馈图标
+      $message.find('.help-block[data-bv-rule][data-bv-for="' + field + '"]').remove();
+      $parent.find('i[data-bv-icon-for="' + field + '"]').remove();
+
+      // 每当用户更新字段值时，将其标记为尚未验证
+      $field.off(events).on(events, function () {
+        that.updateStatus($$6(this), Constants.STATUS_NOT_VALIDATED);
+      });
+
+      //保存错误消息容器到$field上
+      $field.data('bv.messages', $message); //updateStatus要用
+
+      for (let ruleName in _classPrivateFieldGet(this, _options).fields[field].rules) {
+        //将所有的验证规则标记为未验证  bv.result.notEmpty bv.result.stringLength bv.result.emailAddress
+        $field.data('bv.result.' + ruleName, Constants.STATUS_NOT_VALIDATED);
+
+        //!updateAll：如果具有多个除了类型为radio，checkbox相同的name的字段元素时
+        // || i === total - 1  如果类型是radio，checkbox 或者 total长度为1的字段元素 则等待外层循环到最后一次时再执行if内语句
+        // 如果你这样有点不太好理解，可以换成这样
+        // if (!updateAll) {
+        //   $('<small/>')
+        //     .css('display', 'none')
+        //     .addClass('help-block')
+        //     .attr('data-bv-rule', ruleName)
+        //     .attr('data-bv-for', field)
+        //     .attr('data-bv-result', Constants.STATUS_NOT_VALIDATED)
+        //     .html(this.#getMessage(field, ruleName))
+        //     .appendTo($message);
+        // } else if (i === total - 1) { //这个判断是等待外层循环到最后一次时再执行
+        //   $('<small/>')
+        //     .css('display', 'none')
+        //     .addClass('help-block')
+        //     .attr('data-bv-rule', ruleName)
+        //     .attr('data-bv-for', field)
+        //     .attr('data-bv-result', Constants.STATUS_NOT_VALIDATED)
+        //     .html(this.#getMessage(field, ruleName))
+        //     .appendTo($message);
+        // }
+        if (!updateAll || i === total - 1) {
+          $$6('<small/>').css('display', 'none').addClass('help-block').attr('data-bv-rule', ruleName).attr('data-bv-for', field).attr('data-bv-result', Constants.STATUS_NOT_VALIDATED).html(_classPrivateMethodGet(this, _getMessage, _getMessage2).call(this, field, ruleName)).appendTo($message);
+        }
+
+        // 初始化验证器
+        if ('function' === typeof $$6.fn[Constants.NAME].rules[ruleName].init) {
+          //如果验证规则中 定义了init方法，那么调用它。
+          $$6.fn[Constants.NAME].rules[ruleName].init(this, $field, this.options.fields[field].rules[ruleName]);
+        }
+      }
+
+      //准备反馈图标
+      // 可用图标 https://getbootstrap.com/docs/3.4/css/#forms-control-validation
+      //该判断是先判断字段是否已经先设置图标，字段没有，那就从大选项中去找
+      if (_classPrivateFieldGet(this, _options).fields[field].feedbackIcons !== false && _classPrivateFieldGet(this, _options).fields[field].feedbackIcons !== 'false' && _classPrivateFieldGet(this, _options).feedbackIcons && _classPrivateFieldGet(this, _options).feedbackIcons.validating && _classPrivateFieldGet(this, _options).feedbackIcons.invalid && _classPrivateFieldGet(this, _options).feedbackIcons.valid && (!updateAll || i === total - 1)) {
+        // $parent.removeClass('has-success').removeClass('has-error').addClass('has-feedback');
+
+        // 如果是带有图标的设置，那么根据bootstrap3.x的官网可以得出结论，是需要在父级添加.has-feedback类的。
+        //   <div class="form-group has-success has-feedback">
+        //     <label class="control-label" for="inputGroupSuccess1">带成功状态的input-group</label>
+        //     <div class="input-group">
+        //         <span class="input-group-addon">@</span>
+        //         <input type="text" class="form-control" id="inputGroupSuccess1"
+        //             aria-describedby="inputGroupSuccess1Status">
+        //     </div>
+        //     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+        //     <span id="inputGroupSuccess1Status" class="sr-only">(success)</span>
+        // </div>
+        // 实际上就是给.form-group所在的元素添加一个.has-feedback
+        $parent.addClass('has-feedback');
+
+        //创建图标元素。插入到字段元素的后面$field
+        let $icon = $$6('<i/>').css('display', 'none').addClass('form-control-feedback').attr('data-bv-icon-for', field).insertAfter($field);
+
+        // console.log($icon);
+
+        // 如果是单选框和复选框放在的容器后面
+        // <div class="form-group">
+        //   <label class="col-lg-3 control-label">爱好</label>
+        //     <div class="col-lg-5">
+        //         <div class="radio">
+        //             <label>
+        //                 <input type="radio" name="hobby[]" id="hobby1" value="option1">
+        //                 跑步
+        //             </label>
+        //         </div>
+        //         <div class="radio">
+        //             <label>
+        //                 <input type="radio" name="hobby[]" id="hobby2" value="option2">
+        //                 篮球
+        //             </label>
+        //         </div>
+        //         <div class="radio disabled">
+        //             <label>
+        //                 <input type="radio" name="hobby[]" id="hobby3" value="option3" disabled>
+        //                 乒乓球
+        //             </label>
+        //         </div>
+        //     </div>
+        // </div>
+        // $field其实就是上面的每一个input框 <input type="radio" name="hobby[]" id="hobby2" value="option2">
+        if ('checkbox' === type || 'radio' === type) {
+          let $fieldParent = $field.parent(); //得到的是 <label>xxx</label>
+          if ($fieldParent.hasClass(type)) {
+            //既然得到的是<label>xxx</label> 那么它肯定是没有这个radio或者是chekcbox类(bootstrap的单选/复选设计如此)
+            $icon.insertAfter($fieldParent); //如果有就直接插入到该字段元素的父级元素后面。
+          } else if ($fieldParent.parent().hasClass(type)) {
+            //进入该判断，则判断父级的父级是否有该类
+            $icon.insertAfter($fieldParent.parent()); //有的话就插入到后面。
+          }
+        }
+
+        // 如果没有标签，则反馈图标无法正确渲染
+        // https://github.com/twbs/bootstrap/issues/12873
+        if ($parent.find('label').length === 0) {
+          $icon.addClass('bv-no-label');
+        }
+
+        // 修复输入组中的反馈图标
+        if ($parent.find('.input-group').length !== 0) {
+          $icon.addClass('bv-icon-input-group').insertAfter($parent.find('.input-group').eq(0));
+        }
+
+        // 将图标存储为字段元素的数据
+        if (!updateAll) {
+          $field.data('bv.icon', $icon);
+        } else if (i === total - 1) {
+          // 具有相同名称的所有字段都具有相同的图标
+          fields.data('bv.icon', $icon);
+        }
+        if (container) {
+          //如果有指示错误消息容器。
+          $field
+          // 当字段获得焦点时显示工具提示/弹出消息
+          .off('focus.container.bv').on('focus.container.bv', function () {
+            switch (container) {
+              case 'tooltip':
+                $$6(this).data('bv.icon').tooltip('show');
+                break;
+              case 'popover':
+                $$6(this).data('bv.icon').popover('show');
+                break;
+            }
+          })
+          // 并在失去焦点时隐藏它们
+          .off('blur.container.bv').on('blur.container.bv', function () {
+            switch (container) {
+              case 'tooltip':
+                $$6(this).data('bv.icon').tooltip('hide');
+                break;
+              case 'popover':
+                $$6(this).data('bv.icon').popover('hide');
+                break;
+            }
+          });
+        }
+      }
+    }
+
+    // 准备事件
+    fields.on(_classPrivateFieldGet(this, _options).events.fieldSuccess, function (e, data) {
+      let onSuccess = that.getOptions(data.field, null, 'onSuccess');
+      if (onSuccess) {
+        Utils.call(onSuccess, [e, data]);
+      }
+    }).on(_classPrivateFieldGet(this, _options).events.fieldError, function (e, data) {
+      let onError = that.getOptions(data.field, null, 'onError');
+      if (onError) {
+        Utils.call(onError, [e, data]);
+      }
+    }).on(_classPrivateFieldGet(this, _options).events.fieldStatus, function (e, data) {
+      let onStatus = that.getOptions(data.field, null, 'onStatus');
+      if (onStatus) {
+        Utils.call(onStatus, [e, data]);
+      }
+    }).on(_classPrivateFieldGet(this, _options).events.validatorError, function (e, data) {
+      let onError = that.getOptions(data.field, data.validator, 'onError');
+      if (onError) {
+        Utils.call(onError, [e, data]);
+      }
+    }).on(_classPrivateFieldGet(this, _options).events.validatorSuccess, function (e, data) {
+      let onSuccess = that.getOptions(data.field, data.validator, 'onSuccess');
+      if (onSuccess) {
+        Utils.call(onSuccess, [e, data]);
+      }
+    });
+
+    // 根据选项传入过来的模式选项来开始设置事件。 focus.live.bv blur.live.bv  change.live.bv input.live.bv
+    events = $$6.map(trigger, function (item) {
+      return item + '.live.bv';
+    }).join(' ');
+    if (_classPrivateFieldGet(this, _options).live === 'disabled') {
+      // 提交表单后才会显示错误消息
+      fields.off(events);
+    } else if (_classPrivateFieldGet(this, _options).live !== 'submitted') {
+      // 意思就是 this.#options.live === 'enabled' 或者其它乱七八糟的字符串
+
+      fields.off(events).on(events, function () {
+        if (_classPrivateMethodGet(that, _exceedThreshold, _exceedThreshold2).call(that, $$6(this))) {
+          that.validateField($$6(this));
+        }
+      });
+    }
+    fields.trigger($$6.Event(_classPrivateFieldGet(this, _options).events.fieldInit), {
+      bv: this,
+      field: field,
+      element: fields
+    });
+  }
+  function _submit2() {
+    let isValid = this.isValid();
+    let eventType = isValid ? _classPrivateFieldGet(this, _options).events.formSuccess : _classPrivateFieldGet(this, _options).events.formError;
+    let e = $$6.Event(eventType);
+    _classPrivateFieldGet(this, _$form).trigger(e);
+
+    // 调用默认处理程序
+    // 检查是否单击了提交按钮
+    if (_classPrivateFieldGet(this, _$submitButton)) {
+      isValid ? _classPrivateMethodGet(this, _onSuccess, _onSuccess2).call(this, e) : _classPrivateMethodGet(this, _onError, _onError2).call(this, e);
+    }
+  }
+  function _onSuccess2(e) {
+    if (e.isDefaultPrevented()) {
+      return;
+    }
+
+    // 提交表单
+    this.disableSubmitButtons(true).defaultSubmit();
+  }
+  function _onError2(e) {
+    if (e.isDefaultPrevented()) {
+      return;
+    }
+    if ('submitted' === _classPrivateFieldGet(this, _options).live) {
+      // 设置成 enabled 模式
+      _classPrivateFieldGet(this, _options).live = 'enabled';
+
+      //保存this
+      let that = this;
+      for (let field in _classPrivateFieldGet(this, _options).fields) {
+        let fields = this.getFieldElements(field);
+        if (fields.length) {
+          let type = $$6(fields[0]).attr('type');
+          let event = 'radio' === type || 'checkbox' === type || 'file' === type || 'SELECT' === $$6(fields[0]).get(0).tagName ? 'change' : _classPrivateFieldGet(that, _changeEvent);
+          let trigger = _classPrivateFieldGet(that, _options).fields[field].trigger || _classPrivateFieldGet(that, _options).trigger || event;
+          let events = $$6.map(trigger.split(' '), function (item) {
+            return item + '.live.bv';
+          }).join(' ');
+          fields.off(events).on(events, function () {
+            if (_classPrivateMethodGet(that, _exceedThreshold, _exceedThreshold2).call(that, $$6(this))) {
+              that.validateField($$6(this));
+            }
+          });
+        }
+      }
+    }
+
+    // 已确定将自动关注的第一个无效字段
+    for (let i = 0; i < _classPrivateFieldGet(this, _$invalidFields).length; i++) {
+      let $field = _classPrivateFieldGet(this, _$invalidFields).eq(i);
+      let autoFocus = _classPrivateMethodGet(this, _isOptionEnabled, _isOptionEnabled2).call(this, $field.attr('data-bv-field'), 'autoFocus');
+      if (autoFocus) {
+        // 激活包含字段的选项卡（如果存在）
+        let $tabPane = $field.parents('.tab-pane');
+        let tabId;
+        if ($tabPane && (tabId = $tabPane.attr('id'))) {
+          $$6('a[href="#' + tabId + '"][data-toggle="tab"]').tab('show');
+        }
+        // 给字段聚焦
+        $field.focus();
+        break;
+      }
+    }
+  }
+  function _getFields2(field) {
+    var _fieldMapping$field;
+    let fields = $$6([]);
+    const fieldMapping = {
+      object: () => {
+        fields = field;
+        field = field.attr('data-bv-field');
+      },
+      string: () => {
+        fields = this.getFieldElements(field);
+      }
+    };
+
+    //可选链运算符 ?.
+    (_fieldMapping$field = fieldMapping[typeof field]) === null || _fieldMapping$field === void 0 || _fieldMapping$field.call(fieldMapping);
+    return {
+      fields,
+      matchedField: field
+    };
+  }
+  function _isExistField2(fields, matchedField) {
+    if (fields.length === 0 || !_classPrivateFieldGet(this, _options).fields[matchedField] || _classPrivateFieldGet(this, _options).fields[matchedField].enabled === false) {
+      return false;
+    }
+    return true;
+  }
+  function _onFieldValidated2($field, ruleName) {
+    let field = $field.attr('data-bv-field');
+    let rules = _classPrivateFieldGet(this, _options).fields[field].rules;
+    let counter = {};
+    let numValidators = 0;
+    let data = {
+      bv: this,
+      field: field,
+      element: $field,
+      validator: ruleName,
+      result: $field.data('bv.response.' + ruleName)
+    };
+
+    // 在给定的验证器完成后触发事件
+    if (ruleName) {
+      var _ruleMapping$$field$d;
+      const ruleMapping = {
+        [Constants.STATUS_INVALID]: () => {
+          //xxxx
+          $field.trigger($$6.Event(_classPrivateFieldGet(this, _options).events.ruleError), data);
+        },
+        [Constants.STATUS_VALID]: () => {
+          //xxx
+          $field.trigger($$6.Event(_classPrivateFieldGet(this, _options).events.ruleSuccess), data);
+        }
+      };
+      (_ruleMapping$$field$d = ruleMapping[$field.data('bv.result.' + ruleName)]) === null || _ruleMapping$$field$d === void 0 || _ruleMapping$$field$d.call(ruleMapping);
+    }
+    counter[Constants.STATUS_NOT_VALIDATED] = 0;
+    counter[Constants.STATUS_VALIDATING] = 0;
+    counter[Constants.STATUS_INVALID] = 0;
+    counter[Constants.STATUS_VALID] = 0;
+    for (let rule in rules) {
+      if (rules[rule].enabled === false) {
+        continue;
+      }
+      numValidators++;
+      let result = $field.data('bv.result.' + rule);
+      if (result) {
+        counter[result]++;
+      }
+    }
+
+    //如果所有验证器都已完成，并且至少有一个验证器未通过
+    let condition = (counter[Constants.STATUS_NOT_VALIDATED] === 0 || !_classPrivateMethodGet(this, _isOptionEnabled, _isOptionEnabled2).call(this, field, 'verbose')) && counter[Constants.STATUS_VALIDATING] === 0 && counter[Constants.STATUS_INVALID] > 0;
+    if (counter[Constants.STATUS_VALID] === numValidators) {
+      //从无效字段列表中删除
+      _classPrivateFieldSet(this, _$invalidFields, _classPrivateFieldGet(this, _$invalidFields).not($field));
+      $field.trigger($$6.Event(_classPrivateFieldGet(this, _options).events.fieldSuccess), data);
+    } else if (condition) {
+      // 添加到无效字段列表
+      _classPrivateFieldSet(this, _$invalidFields, _classPrivateFieldGet(this, _$invalidFields).add($field));
+      $field.trigger($$6.Event(_classPrivateFieldGet(this, _options).events.fieldError), data);
+    }
+  }
+  function _isExcluded2($field) {
+    let excludedAttr = $field.attr('data-bv-excluded');
+    // 再次取字段
+    let field = $field.attr('data-bv-field') || $field.attr('name');
+
+    //确保有该字段。
+    let hasField = Boolean(field) && _classPrivateFieldGet(this, _options).fields && _classPrivateFieldGet(this, _options).fields[field];
+    // 确保字段选项上有设置 excluded
+    let hasExcludedOption = _classPrivateFieldGet(this, _options).fields[field].excluded === 'true' || _classPrivateFieldGet(this, _options).fields[field].excluded === true;
+    let withoutExcludedOption = _classPrivateFieldGet(this, _options).fields[field].excluded === 'false' || _classPrivateFieldGet(this, _options).fields[field].excluded === false;
+    if (hasField && hasExcludedOption || excludedAttr === 'true' || excludedAttr === '') {
+      return true;
+    } else if (hasField && withoutExcludedOption || excludedAttr === 'false') {
+      return false;
+    } else {
+      if (_classPrivateFieldGet(this, _options).excluded) {
+        // excluded的格式可以是下面三种情况
+        // 数组，元素是字符串:
+        // [':disabled', ':hidden', ':not(:visible)']
+        // 字符串数组，使用逗号分隔:
+        // ':disabled, :hidden, :not(:visible)'
+        // 数组，元素可以是一个callback，其中callback内必须返回true/false
+        // [':disabled', ':hidden', function ($field, validation) {
+        //   // 不验证不可见元素
+        //   return !$field.is(':visible');
+        // }]
+
+        // 如果是字符串格式 ':disabled, :hidden, :not(:visible)'
+        // 先统一转换成数组的格式
+        if ('string' === typeof _classPrivateFieldGet(this, _options).excluded) {
+          _classPrivateFieldGet(this, _options).excluded = _classPrivateFieldGet(this, _options).excluded.split(',').map(item => {
+            return item.trim();
+          });
+        }
+        for (const excludedItem of _classPrivateFieldGet(this, _options).excluded) {
+          //如果是字符串，就判断字段元素 是否符合excluded选择器
+          // 如果是函数，那就执行回调。
+          if ('string' === typeof excludedItem && $field.is(excludedItem) || 'function' === typeof excludedItem && excludedItem.call(this, $field, this) === true) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+  }
+  function _isOptionEnabled2(field, option) {
+    if (_classPrivateFieldGet(this, _options).fields[field] && (_classPrivateFieldGet(this, _options).fields[field][option] === 'true' || _classPrivateFieldGet(this, _options).fields[field][option] === true)) {
+      return true;
+    }
+    if (_classPrivateFieldGet(this, _options).fields[field] && (_classPrivateFieldGet(this, _options).fields[field][option] === 'false' || _classPrivateFieldGet(this, _options).fields[field][option] === false)) {
+      return false;
+    }
+    return _classPrivateFieldGet(this, _options)[option] === 'true' || _classPrivateFieldGet(this, _options)[option] === true;
+  }
+  function _exceedThreshold2($field) {
+    let field = $field.attr('data-bv-field');
+    let threshold = _classPrivateFieldGet(this, _options).fields[field].threshold || _classPrivateFieldGet(this, _options).threshold;
+    if (!threshold) {
+      return true;
+    }
+    let cannotType = $$6.inArray($field.attr('type'), ['button', 'checkbox', 'file', 'hidden', 'image', 'radio', 'reset', 'submit']) !== -1;
+    return cannotType || $field.val().length >= threshold;
+  }
+  function _getMessage2(field, ruleName) {
+    if (!_classPrivateFieldGet(this, _options).fields[field] || !$$6.fn[Constants.NAME].rules[ruleName] || !_classPrivateFieldGet(this, _options).fields[field].rules || !_classPrivateFieldGet(this, _options).fields[field].rules[ruleName]) {
+      return '';
+    }
+    let options = _classPrivateFieldGet(this, _options).fields[field].rules[ruleName];
+    switch (true) {
+      case !!options.message:
+        return options.message;
+      case !!_classPrivateFieldGet(this, _options).fields[field].message:
+        return _classPrivateFieldGet(this, _options).fields[field].message;
+      case !!$$6.fn[Constants.NAME].i18n[ruleName]:
+        return $$6.fn[Constants.NAME].i18n[ruleName]['default'];
+      default:
+        return _classPrivateFieldGet(this, _options).message;
+    }
+  }
+  function _getMessageContainer2($field, group) {
+    let $parent = $field.parent();
+    if ($parent.is(group)) {
+      return $parent;
+    }
+    let cssClasses = $parent.attr('class');
+    if (!cssClasses) {
+      return _classPrivateMethodGet(this, _getMessageContainer, _getMessageContainer2).call(this, $parent, group);
+    }
+    cssClasses = cssClasses.split(' ');
+    let n = cssClasses.length;
+    for (let i = 0; i < n; i++) {
+      if (/^col-(xs|sm|md|lg)-\d+$/.test(cssClasses[i]) || /^col-(xs|sm|md|lg)-offset-\d+$/.test(cssClasses[i])) {
+        return $parent;
+      }
+    }
+    return _classPrivateMethodGet(this, _getMessageContainer, _getMessageContainer2).call(this, $parent, group);
+  }
+  function _parseOptions2($field) {
+    let field = $field.attr('name') || $field.attr('data-bv-field');
+    // console.log($.fn[Constants.NAME].rules);
+
+    //验证规则
+    let rules = {};
+    for (const [ruleName, rule] of Object.entries($$6.fn[Constants.NAME].rules)) {
+      //有几个验证规则，这里就要循环几次
+      // console.log(ruleName,rule);
+
+      let attrName = 'data-bv-' + ruleName.toLowerCase();
+
+      //然后从字段元素上取  data-bv-notempty 或者 data-bv-stringlength data-bv-xxx 属性,强制转换为string
+      let enabled = String($field.attr(attrName));
+      let html5AttrMap = 'function' === typeof rule.enableByHtml5 ? rule.enableByHtml5($field) : null;
+
+      // console.log(attrName,enabled,typeof enabled,html5AttrMap,$field);
+
+      //启用html5属性，同时是通过data-bv-xxx来设置验证规则的。
+      let condition = html5AttrMap && enabled !== 'false';
+
+      // 没有启用html5的属性 但是有通过data-bv-xxx来设置验证规则的。
+      //例子1:<input  type="text" class="form-control" name="username" data-bv-notempty data-bv-stringlength="true" />
+      // 例子1解释: 它有data-bv-notempty  data-bv-stringlength="true" 这样的方式来设置rule属性 condition2就会为true
+      // 例子2：<input  type="text" class="form-control" name="username" require  />
+      // 例子2解释：如果设置了，html5的属性 require 或者 没有通过 data-bv-xxx 这种方式来设置验证规则，则enabled肯定会等于undefined 则condition2 就会变成false
+      let condition2 = html5AttrMap !== true && ('' === enabled || 'true' === enabled || attrName === enabled.toLowerCase());
+      // console.log("condition2:",condition2);
+
+      if (condition || condition2) {
+        //尝试通过属性解析选项
+
+        // 合并验证规则 rule 的 html5的属性。下面要用来循环取值
+        // 比如stringLength的html5属性默认有min、max、trim、utf8bytes、message
+        // {message: 'message', onerror: 'onError', onsuccess: 'onSuccess', min: 'min', max: 'max'}
+        rule.html5Attributes = $$6.extend({}, {
+          message: 'message',
+          onerror: 'onError',
+          onsuccess: 'onSuccess'
+        }, rule.html5Attributes);
+        // console.log(rule.html5Attributes,$field);
+
+        rules[ruleName] = $$6.extend({}, html5AttrMap === true ? {} : html5AttrMap, rules[ruleName]);
+        // console.log(rules);
+
+        //解析验证规则的子选项
+        // 例子：<input  type="text" class="form-control" name="username" data-bv-notempty data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" />
+        // 这段代码解析的就是 data-bv-stringlength-min data-bv-stringlength-max 这种验证规则的子选项
+        for (const [html5AttrName, optionName] of Object.entries(rule.html5Attributes)) {
+          let optionAttrName = 'data-bv-' + ruleName.toLowerCase() + '-' + html5AttrName;
+          let optionValue = $field.attr(optionAttrName);
+          // console.log(optionAttrName,optionValue);
+          if (optionValue) {
+            // 如果有设置
+            if ('true' === optionValue || optionAttrName === optionValue.toLowerCase()) {
+              //如果设置的值为true
+              optionValue = true;
+            } else if ('false' === optionValue) {
+              //如果为false
+              optionValue = false;
+            }
+
+            // 则分别给不同的验证规则添加上验证规则的选项。
+            //比如原来该规则是空对象 stringLength: {}   添加过后则变成 stringLength: {min: '2', max: '10' }
+            rules[ruleName][optionName] = optionValue;
+          }
+        }
+      }
+    }
+
+    //获取字段选项
+    const opts = {
+      feedbackIcons: $field.attr('data-bv-feedbackicons'),
+      onStatus: $field.attr('data-bv-onstatus'),
+      selector: $field.attr('data-bv-selector'),
+      ..._classPrivateMethodGet(this, _getCommonDataOptions, _getCommonDataOptions2).call(this, $field),
+      rules
+    };
+
+    //检查字段选项是否使用HTML属性设置
+    let emptyOptions = $$6.isEmptyObject(opts);
+    //检查字段验证器是否使用HTML属性设置
+    let emptyRules = $$6.isEmptyObject(rules);
+    if (!emptyRules || !emptyOptions && _classPrivateFieldGet(this, _options).fields && _classPrivateFieldGet(this, _options).fields[field]) {
+      opts.rules = rules;
+      return opts;
+    } else {
+      return null;
+    }
+  }
+  function _getOptionsfromHtml2() {
+    return {
+      events: {
+        formInit: _classPrivateFieldGet(this, _$form).attr('data-bv-events-form-init'),
+        formError: _classPrivateFieldGet(this, _$form).attr('data-bv-events-form-error'),
+        formSuccess: _classPrivateFieldGet(this, _$form).attr('data-bv-events-form-success'),
+        fieldAdded: _classPrivateFieldGet(this, _$form).attr('data-bv-events-field-added'),
+        fieldRemoved: _classPrivateFieldGet(this, _$form).attr('data-bv-events-field-removed'),
+        fieldInit: _classPrivateFieldGet(this, _$form).attr('data-bv-events-field-init'),
+        fieldError: _classPrivateFieldGet(this, _$form).attr('data-bv-events-field-error'),
+        fieldSuccess: _classPrivateFieldGet(this, _$form).attr('data-bv-events-field-success'),
+        fieldStatus: _classPrivateFieldGet(this, _$form).attr('data-bv-events-field-status'),
+        validatorError: _classPrivateFieldGet(this, _$form).attr('data-bv-events-validator-error'),
+        validatorSuccess: _classPrivateFieldGet(this, _$form).attr('data-bv-events-validator-success')
+      },
+      feedbackIcons: {
+        valid: _classPrivateFieldGet(this, _$form).attr('data-bv-feedbackicons-valid'),
+        invalid: _classPrivateFieldGet(this, _$form).attr('data-bv-feedbackicons-invalid'),
+        validating: _classPrivateFieldGet(this, _$form).attr('data-bv-feedbackicons-validating')
+      },
+      live: _classPrivateFieldGet(this, _$form).attr('data-bv-live'),
+      submitButtons: _classPrivateFieldGet(this, _$form).attr('data-bv-submitbuttons'),
+      ..._classPrivateMethodGet(this, _getCommonDataOptions, _getCommonDataOptions2).call(this, _classPrivateFieldGet(this, _$form))
+    };
+  }
+  function _getCommonDataOptions2($type) {
+    return {
+      autoFocus: $type.attr('data-bv-autofocus'),
+      container: $type.attr('data-bv-container'),
+      excluded: $type.attr('data-bv-excluded'),
+      group: $type.attr('data-bv-group'),
+      message: $type.attr('data-bv-message'),
+      onError: $type.attr('data-bv-onerror'),
+      onSuccess: $type.attr('data-bv-onsuccess'),
+      threshold: $type.attr('data-bv-threshold'),
+      trigger: $type.attr('data-bv-trigger'),
+      verbose: $type.attr('data-bv-verbose')
+    };
+  }
   //静态变量
   _defineProperty(BootstrapValidation, "VERSION", Constants.VERSION);
   _defineProperty(BootstrapValidation, "DEFAULTS", Constants.DEFAULTS);
-  $$5.fn[Constants.NAME] = function (option) {
+  $$6.fn[Constants.NAME] = function (option) {
     //获取参数
     let params = arguments;
     return this.each(function () {
-      let $this = $$5(this);
+      let $this = $$6(this);
       let data = $this.data(Constants.NAME);
 
       //选项合并
-      let options = $$5.extend({}, $$5.fn[Constants.NAME].defaults, 'object' === typeof option && option);
+      let options = $$6.extend({}, $$6.fn[Constants.NAME].defaults, 'object' === typeof option && option);
       //如果不存在就创建一个实例,然后存到data属性
       if (!data) {
         data = new BootstrapValidation(this, options);
@@ -2947,12 +5146,12 @@
       }
     });
   };
-  $$5.fn[Constants.NAME].Constructor = BootstrapValidation;
-  $$5.fn[Constants.NAME].VERSION = BootstrapValidation.VERSION;
-  $$5.fn[Constants.NAME].defaults = BootstrapValidation.DEFAULTS;
-  $$5.fn[Constants.NAME].validators = Rules;
-  $$5.fn[Constants.NAME].i18n = {};
-  $$5.fn[Constants.NAME].utils = Utils;
+  $$6.fn[Constants.NAME].Constructor = BootstrapValidation;
+  $$6.fn[Constants.NAME].VERSION = BootstrapValidation.VERSION;
+  $$6.fn[Constants.NAME].defaults = BootstrapValidation.DEFAULTS;
+  $$6.fn[Constants.NAME].rules = Rules;
+  $$6.fn[Constants.NAME].i18n = {};
+  $$6.fn[Constants.NAME].utils = Utils;
 
   return BootstrapValidation;
 

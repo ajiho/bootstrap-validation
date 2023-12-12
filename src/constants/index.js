@@ -3,21 +3,22 @@ const VERSION = '0.5.3'
 
 //默认选项
 const DEFAULTS = {
-  // 第一个无效字段将自动聚焦
+  // 第一个无效字段将自动聚焦,默认是true,还可以为特定字段设置此选项
   autoFocus: true,
+
   //错误消息容器。可以是:
   // - 'tooltip' 如果要使用引导工具提示显示错误消息
   // - 'popover' 如果要使用引导弹出窗口显示错误消息
   // - css选择器指定的容器
   // 在前两种情况下，由于工具提示/popover应该足够小，因此插件只显示一条错误消息
   // 您还可以为特定字段定义消息容器
+  //String|Function 指示错误消息的显示位置。这是null默认的
   container: null,
 
   // 表单CSS类
   elementClass: 'bv-form',
 
   // 使用自定义事件名称以避免jQuery调用window.onerror
-  // See https://github.com/nghuuphuoc/bootstrapvalidator/issues/630
   events: {
     formInit: 'init.form.bv',
     formError: 'error.form.bv',
@@ -28,13 +29,20 @@ const DEFAULTS = {
     fieldError: 'error.field.bv',
     fieldSuccess: 'success.field.bv',
     fieldStatus: 'status.field.bv',
-    validatorError: 'error.validator.bv',
-    validatorSuccess: 'success.validator.bv',
+    ruleError: 'error.rule.bv',
+    ruleSuccess: 'success.rule.bv',
   },
 
-  // 指示将不被验证的字段
+  // 指示不会被验证的字段，默认下面三种类型的字段不会被验证
   excluded: [':disabled', ':hidden', ':not(:visible)'],
-  //反馈图标
+
+  // 反馈图标
+  // - 使用 FontAwesome icons:
+  //  feedbackIcons: {
+  //      valid: 'fa fa-check',
+  //      invalid: 'fa fa-times',
+  //      validating: 'fa fa-refresh'
+  //  }
   feedbackIcons: {
     valid: null,
     invalid: null,
@@ -51,19 +59,19 @@ const DEFAULTS = {
 
   // 实时验证选项
   // 可以是3个值之一:
-  // - enabled: 该插件在字段更改后立即验证字段
-  // - disabled: 禁用实时验证。只有在提交表单后才会显示错误消息
+  // - enabled: 字段更改后立即验证字段
+  // - disabled: 提交表单后才会显示错误消息
   // - submitted: 表单提交后启用实时验证
   live: 'enabled',
 
   // 默认无效消息
-  message: 'This value is not valid',
+  message: '此值无效',
 
   // 提交按钮选择器
   // 这些按钮将被禁用，以防止有效表单多次提交
   submitButtons: '[type="submit"]',
 
-  // 如果字段长度小于此字符数，则不会对其进行实时验证
+  // 如果字段长度小于此字符数，则不会对其进行实时验证 Number
   threshold: null,
 
   // 验证字段时是否详细.
@@ -73,17 +81,14 @@ const DEFAULTS = {
   verbose: true,
 }
 
-//状态
-const STATUS = {
-  //未验证的
-  not_validated: 'NOT_VALIDATED',
-  //验证中
-  validating: 'VALIDATING',
-  //无效的
-  invalid: 'INVALID',
-  //通过
-  valid: 'VALID',
-}
+//未验证的
+const STATUS_NOT_VALIDATED = 'NOT_VALIDATED'
+//验证中
+const STATUS_VALIDATING = 'VALIDATING'
+//无效的
+const STATUS_INVALID = 'INVALID'
+//通过
+const STATUS_VALID = 'VALID'
 
 //jquery插件名称
 const NAME = 'bootstrapValidation'
@@ -91,6 +96,9 @@ const NAME = 'bootstrapValidation'
 export default {
   VERSION,
   DEFAULTS,
-  STATUS,
+  STATUS_NOT_VALIDATED,
+  STATUS_VALIDATING,
+  STATUS_INVALID,
+  STATUS_VALID,
   NAME,
 }
